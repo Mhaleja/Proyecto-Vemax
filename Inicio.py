@@ -41,3 +41,6 @@ def login():
             return
     
     print("Datos incorrectos ")
+
+registrar()
+login()
