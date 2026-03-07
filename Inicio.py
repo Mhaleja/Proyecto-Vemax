@@ -1,46 +1,36 @@
-from fastapi import FastAPI 
-app = FastAPI() 
-@app.get("/")
-def home(): 
-    return {"mensaje": "Mi API está funcionando"} 
+from fastapi import FastAPI
 
-
-@app.get("/eventos") 
-
-def listar_eventos(): 
-
-    return {"eventos": ["CONIITI 2024", "Taller React", "Charla IA"]}         
-
-
+app = FastAPI()
 
 usuarios = []
-@app.get("/eventos")
-def registrar():
-    print("\n--------------REGISTRO--------------")
-    
-    correo = input("Correo: ")
-    usuario = input("Usuario: ")
-    contraseña = input("Contraseña: ")
-    edad = int(input("Edad: "))
 
-    nuevo_usuario = {"correo": correo,"usuario": usuario,"contraseña": contraseña,"edad": edad }
-    
-    usuarios.append(nuevo_usuario)
-    print("Usuario registrado correctamente")
-    
+@app.get("/")
+def home():
+    return {"mensaje": "Mi API está funcionando"}
+
 @app.get("/eventos")
-def login():
-    print("\n--------------LOGIN--------------")
+def listar_eventos():
+    return {"eventos": ["CONIITI 2024", "Taller React", "Charla IA"]}
+
+@app.post("/registro")
+def registrar(correo: str, usuario: str, contraseña: str, edad: int):
     
-    correo = input("Correo: ")
-    contraseña = input("Contraseña: ")
-    
+    nuevo_usuario = {
+        "correo": correo,
+        "usuario": usuario,
+        "contraseña": contraseña,
+        "edad": edad
+    }
+
+    usuarios.append(nuevo_usuario)
+
+    return {"mensaje": "Usuario registrado correctamente"}
+
+@app.post("/login")
+def login(correo: str, contraseña: str):
+
     for usuario in usuarios:
         if usuario["correo"] == correo and usuario["contraseña"] == contraseña:
-            print(f"Bienvenido {usuario['usuario']} ")
-            return
-    
-    print("Datos incorrectos ")
-#h
-registrar()
-login()
+            return {"mensaje": f"Bienvenido {usuario['usuario']}"}
+
+    return {"mensaje": "Datos incorrectos"}
