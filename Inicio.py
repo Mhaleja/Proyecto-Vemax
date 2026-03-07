@@ -2,7 +2,6 @@ from fastapi import FastAPI
 app = FastAPI() 
 @app.get("/")
 def home(): 
-
     return {"mensaje": "Mi API está funcionando"} 
 
 
@@ -15,7 +14,7 @@ def listar_eventos():
 
 
 usuarios = []
-
+@app.get("/eventos")
 def registrar():
     print("\n--------------REGISTRO--------------")
     
@@ -28,7 +27,8 @@ def registrar():
     
     usuarios.append(nuevo_usuario)
     print("Usuario registrado correctamente")
-
+    
+@app.get("/eventos")
 def login():
     print("\n--------------LOGIN--------------")
     
