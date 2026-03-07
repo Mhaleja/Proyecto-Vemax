@@ -14,7 +14,7 @@ def listar_eventos():
 
 @app.post("/registro")
 def registrar(correo: str, usuario: str, contraseña: str, edad: int):
-    
+
     nuevo_usuario = {
         "correo": correo,
         "usuario": usuario,
@@ -24,7 +24,7 @@ def registrar(correo: str, usuario: str, contraseña: str, edad: int):
 
     usuarios.append(nuevo_usuario)
 
-    return {"mensaje": "Usuario registrado correctamente"}
+    return {"mensaje": "Usuario registrado"}
 
 @app.post("/login")
 def login(correo: str, contraseña: str):
