@@ -81,7 +81,7 @@ function registrar(){
     let password = document.getElementById("password").value;
     let edad = parseInt(document.getElementById("edad").value);
 
-    fetch("http://127.0.0.1:8000/registro", {
+    fetch("/registro", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -98,7 +98,7 @@ function login(){
     let correo = document.getElementById("correoLogin").value;
     let password = document.getElementById("passwordLogin").value;
 
-    fetch("http://127.0.0.1:8000/login", {
+    fetch("/login", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
