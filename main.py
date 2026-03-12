@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from fastapi.responses import FileResponse
 from pydantic import BaseModel
+import os
 
 app = FastAPI()
 
@@ -16,14 +17,18 @@ class LoginModel(BaseModel):
     correo: str
     password: str
 
+
 @app.get("/")
 def home():
-    return FileResponse("index.html")
+    ruta = os.path.join(os.path.dirname(__file__), "index.html")
+    return FileResponse(ruta)
+
 
 @app.post("/registro")
 def registrar(datos: RegistroModel):
     usuarios.append(datos.dict())
     return {"mensaje": "Usuario registrado"}
+
 
 @app.post("/login")
 def login(datos: LoginModel):
