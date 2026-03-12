@@ -25,12 +25,15 @@ def home():
 @app.post("/registro")
 def registrar(datos: RegistroModel):
     usuarios.append(datos.dict())
-    return {"mensaje": "Usuario registrado"}
+    return {"mensaje": f"Usuario {datos.usuario} registrado"}
 
 
 @app.post("/login")
 def login(datos: LoginModel):
     for usuario in usuarios:
-        if usuario["correo"] == datos.correo and usuario["password"] == datos.password:
-            return {"mensaje": f"Bienvenido {usuario['usuario']}"}
-    return {"mensaje": "Datos incorrectos"}
+        if usuario["correo"] == datos.correo:
+            if usuario["password"] == datos.password:
+                return {"mensaje": f"Bienvenido {usuario['usuario']}"}
+            else:
+                return {"mensaje": "Contraseña incorrecta"}
+    return {"mensaje": "Usuario no existe"}
