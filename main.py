@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 from pydantic import BaseModel
 
 app = FastAPI()
@@ -17,8 +17,9 @@ class LoginModel(BaseModel):
     password: str
 
 
-# Servir archivos estáticos
-app.mount("/", StaticFiles(directory=".", html=True), name="static")
+@app.get("/")
+def home():
+    return FileResponse("index.html")
 
 
 @app.post("/registro")
