@@ -1,11 +1,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Mi API de Eventos</title>
+    <title>VEMAX</title>
+     <link rel="shortcut icon" href="icon/VEMAX.png" type="image/x-icon">
     <style>
         body{
         font-family: Arial;
-        background-color: #160642;
+        background-image: url('porfa.jpg'); 
+        background-repeat: no-repeat;       
+        background-size: cover;             
+        background-attachment: fixed;       
+         background-position: center;  
         text-align: center;
         margin: 0;
         height: 100vh;
@@ -31,7 +36,7 @@
 
         button{
             padding: 10px;
-            background-color: #143a62;
+            background-color: #05038d;
             color: white;
             border: none;
             margin-top: 10px;
@@ -39,11 +44,11 @@
         }
 
         button:hover{
-            background-color: #263748;
+            background-color: #5397d6;
         }
 
         h2{
-            color: #333;
+            color: #050505;
         }
     </style>
 </head>
@@ -56,8 +61,8 @@
 
 <input id="correo" placeholder="Correo"><br>
 <input id="usuario" placeholder="Usuario"><br>
-<input id="password" type="password" placeholder="Contraseña"><br>
-<input id="edad" type="number" placeholder="Edad"><br>
+<input id="contraseña" type="password" placeholder="Contraseña"><br>
+<input id="codigo" type="codigo" placeholder="Código"><br>
 
 <button onclick="registrar()">Registrarse</button>
 
@@ -66,7 +71,7 @@
 <h2>Login</h2>
 
 <input id="correoLogin" placeholder="Correo"><br>
-<input id="passwordLogin" type="password" placeholder="Contraseña"><br>
+<input id="contraseñaLogin" type="password" placeholder="Contraseña"><br>
 
 <button onclick="login()">Entrar</button>
 
@@ -78,15 +83,15 @@
 function registrar(){
     let correo = document.getElementById("correo").value;
     let usuario = document.getElementById("usuario").value;
-    let password = document.getElementById("password").value;
-    let edad = parseInt(document.getElementById("edad").value);
+    let password = document.getElementById("contraseña").value;
+    let codigo = parseInt(document.getElementById("codigo").value);
 
     fetch("/registro", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
         },
-        body: JSON.stringify({ correo, usuario, password, edad })
+        body: JSON.stringify({ correo, usuario, password, codigo })
     })
     .then(res => res.json())
     .then(data => {
@@ -96,7 +101,7 @@ function registrar(){
 
 function login(){
     let correo = document.getElementById("correoLogin").value;
-    let password = document.getElementById("passwordLogin").value;
+    let password = document.getElementById("contraseñaLogin").value;
 
     fetch("/login", {
         method: "POST",
