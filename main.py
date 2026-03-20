@@ -9,12 +9,12 @@ usuarios = []
 class RegistroModel(BaseModel):
     correo: str
     usuario: str
-    contrasena: str
+    contraseña: str
     codigo: int
 
 class LoginModel(BaseModel):
     correo: str
-    contrasena: str
+    contraseña: str
 
 
 @app.get("/")
@@ -43,7 +43,7 @@ def registrar(datos: RegistroModel):
 def login(datos: LoginModel):
     for usuario in usuarios:
         if usuario["correo"] == datos.correo:
-            if usuario["contrasena"] == datos.contrasena:
+            if usuario["contraseña"] == datos.contraseña:
                 return {"mensaje": f"Bienvenido {usuario['usuario']}"}
             else:
                 return {"mensaje": "Contraseña incorrecta"}
