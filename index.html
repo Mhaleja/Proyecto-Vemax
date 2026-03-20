@@ -61,7 +61,7 @@
 
 <input id="correo" placeholder="Correo"><br>
 <input id="usuario" placeholder="Usuario"><br>
-<input id="contraseña" type="password" placeholder="Contraseña"><br>
+<input id="contraseña" type="contraseña" placeholder="Contraseña"><br>
 <input id="codigo" type="codigo" placeholder="Código"><br>
 
 <button onclick="registrar()">Registrarse</button>
@@ -71,7 +71,7 @@
 <h2>Login</h2>
 
 <input id="correoLogin" placeholder="Correo"><br>
-<input id="contraseñaLogin" type="password" placeholder="Contraseña"><br>
+<input id="contraseñaLogin" type="contraseña" placeholder="Contraseña"><br>
 
 <button onclick="login()">Entrar</button>
 
@@ -83,7 +83,7 @@
 function registrar(){
     let correo = document.getElementById("correo").value;
     let usuario = document.getElementById("usuario").value;
-    let password = document.getElementById("contraseña").value;
+    let contraseña = document.getElementById("contraseña").value;
     let codigo = parseInt(document.getElementById("codigo").value);
 
     fetch("/registro", {
@@ -91,7 +91,7 @@ function registrar(){
         headers: {
             "Content-Type": "application/json"
         },
-        body: JSON.stringify({ correo, usuario, password, codigo })
+        body: JSON.stringify({ correo, usuario, contraseña, codigo })
     })
     .then(res => res.json())
     .then(data => {
@@ -101,14 +101,14 @@ function registrar(){
 
 function login(){
     let correo = document.getElementById("correoLogin").value;
-    let password = document.getElementById("contraseñaLogin").value;
+    let contraseña = document.getElementById("contraseñaLogin").value;
 
     fetch("/login", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
         },
-        body: JSON.stringify({ correo, password })
+        body: JSON.stringify({ correo, contraseña })
     })
     .then(res => res.json())
     .then(data => {
