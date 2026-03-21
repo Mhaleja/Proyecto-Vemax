@@ -57,7 +57,7 @@ def UsuarioId(id: int):
         if usuario["id"] == id:
             return usuario
     
-    raise HTTPException(status_code=404, detail="Datos no encontrados :)")
+    raise HTTPException(status_code=404, detail="Datos no encontrados, error 404 :)")
 
 
 @app.get("/buscar")
