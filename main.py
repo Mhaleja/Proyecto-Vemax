@@ -5,8 +5,7 @@ from pydantic import BaseModel
 
 app = FastAPI()
 
-app.mount("/", StaticFiles(directory=".", html=True), name="static")
-
+app.mount("/static", StaticFiles(directory=".", html=True), name="static")
 usuarios = []
 
 class RegistroModel(BaseModel):
@@ -28,10 +27,8 @@ def home():
 @app.post("/registro") 
 def registrar(datos: RegistroModel):
     asignarid = len(usuarios) + 1
-
     nuevoUsuario = datos.dict()
     nuevoUsuario["id"] = asignarid
-
     usuarios.append(nuevoUsuario)
 
     return {"mensaje": f"Usuario {datos.usuario} registrado correctamente"}
@@ -46,4 +43,4 @@ def login(datos: LoginModel):
             else:
                 return {"mensaje": "Contraseña incorrecta"}
 
-    return {"mensaje": "Usuario no existe"}
+    return {"mensaje": "El usuario no existe"}
