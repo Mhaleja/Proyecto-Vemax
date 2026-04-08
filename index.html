@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VEMAX</title>
 
-    <!-- RUTAS CORREGIDAS (SIN /) -->
     <link rel="shortcut icon" href="icon/VEMAX.png" type="image/x-icon">
     <link rel="stylesheet" href="estilos.css">
 </head>
@@ -104,7 +103,7 @@
 
     </div>
 
-    <!-- SCRIPT CORREGIDO -->
+    <!-- SCRIPT DE ANIMACIONES -->
     <script src="animaciones.js"></script>
 
     <!-- FUNCIONES -->
@@ -119,11 +118,19 @@
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({ correo, usuario, contraseña: password })
+            body: JSON.stringify({ 
+                correo: correo,
+                usuario: usuario,
+                contrasena: password,   
+                codigo: 123             
+            })
         })
         .then(res => res.json())
         .then(data => {
             alert(data.mensaje);
+        })
+        .catch(error => {
+            console.error("Error:", error);
         });
     }
 
@@ -136,11 +143,17 @@
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({ correo, contraseña: password })
+            body: JSON.stringify({ 
+                correo: correo,
+                contrasena: password   
+            })
         })
         .then(res => res.json())
         .then(data => {
             alert(data.mensaje);
+        })
+        .catch(error => {
+            console.error("Error:", error);
         });
     }
     </script>
