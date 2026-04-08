@@ -1,90 +1,121 @@
 <!DOCTYPE html>
-<html lang="es">
 <html>
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VEMAX</title>
-    <link rel="shortcut icon" href="icon/VEMAX.png" type="image/x-icon">
-    <link rel="stylesheet" href="/estilos.css">
+     <link rel="shortcut icon" href="icon/VEMAX.png" type="image/x-icon">
+    <style>
+        body{
+        font-family: Arial;
+        background-image: url('porfa.jpg'); 
+        background-repeat: no-repeat;       
+        background-size: cover;             
+        background-attachment: fixed;       
+         background-position: center;  
+        text-align: center;
+        margin: 0;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        }
+
+        .container{
+            width: 400px;
+            margin: auto;
+            background: rgba(255, 255, 255, 0.826);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgb(123, 156, 185);
+        }
+
+        input{
+            width: 90%;
+            padding: 8px;
+            margin: 5px;
+        }
+
+        button{
+            padding: 10px;
+            background-color: #05038d;
+            color: white;
+            border: none;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+
+        button:hover{
+            background-color: #5397d6;
+        }
+
+        h2{
+            color: #050505;
+        }
+    </style>
 </head>
 
 <body>
-    <div class="container">
-        <div class="part1-container">
-            <div class="encabezado">
-                <span>VEMAX</span>
-            </div>
-            <div class="form" id="form">
-                <form class="inicio">
-                    <h2>Bienvenido de nuevo</h2>
-                    <p>¡Hola!,Es momento de organizar las nueces del día. ¡Entra y revisa tu saldo! </p>
-                    <div class="input">
-                        <label for="mail">Correo Electronico</label>
-                        <input type="email" name="Correo" id="Correo" placeholder="Ingresa tu correo electronico">
-                    </div>
-                    <div class="input">
-                        <label for="password">Contraseña</label>
-                        <input type="password" name="Contraseña" id="Contraseña" placeholder="Ingresa su contraseña">
-                    </div>
-                    <div class="recordatorio">
-                        <div class="revisalacaja">
-                            <input type="checkbox" id="terminos">
-                            <label for="terminos">Recuerdame durante 30 días</label>
-                        </div>
-                        <span class="olvidaste">¿Olvidaste la contraseña?</span>
-                    </div>
-                    <div class="botones">
-                        <button>Iniciar sesión</button>
-                        <button>
-                            <img src="/icon/google.png" alt="google" class="google">
-                            Google
-                        </button>
-                    </div>
-                    <p class="cuenta">¿No tienes una cuenta?<a href="#" id="sign-up"> Registrate</a></p>
-                </form>
 
-                <form class="registro">
-                    <h2>Crea tu cuenta</h2>
-                    <p>¡Hola! Bienvenida/o a Vemax. Estamos listos para ayudarte a gestionar tus "nueces" de la mejor manera. </p>
-                    <div class="input">
-                        <label for="name">Usuario</label>
-                        <input type="text" name="Usuario" id="Usuario" placeholder="Ingresa tu usuario">
-                    </div>
-                    <div class="input">
-                        <label for="mail">Correo Electronico</label>
-                        <input type="email" name="Correo" id="Correo" placeholder="Ingresa tu correo electronico">
-                    </div>
-                    <div class="input">
-                        <label for="password">Contraseña</label>
-                        <input type="password" name="Contraseña" id="Contraseña" placeholder="Ingresa su contraseña">
-                    </div>
-                    <div class="botones">
-                        <button>Registro</button>
-                        <button>
-                            <img src="/icon/google.png" alt="google" class="google">
-                            Google
-                        </button>
-                    </div>
-                    <p class="cuenta">¿Ya tienes una cuenta?<a href="#" id="sign-in"> Iniciar Sesión</a></p>
-                </form>
+<div class="container">
 
-            </div>
+<h2>Registro</h2>
 
+<input id="correo" placeholder="Correo"><br>
+<input id="usuario" placeholder="Usuario"><br>
+<input id="contraseña" type="password" placeholder="Contraseña"><br>
+<input id="codigo" type="codigo" placeholder="Código"><br>
 
-            <div class="inferior">
-                <span>VEMAX 2025</span>
-            </div>
-        </div>
+<button onclick="registrar()">Registrarse</button>
 
+<hr>
 
-        <div class="part2-banner" id="banner">
-            <div class="circle"></div>
-            <div class="circle-2"></div>
-        </div>
+<h2>Login</h2>
 
-        <script src="/animaciones.js"></script>
+<input id="correoLogin" placeholder="Correo"><br>
+<input id="contraseñaLogin" type="password" placeholder="Contraseña"><br>
+
+<button onclick="login()">Entrar</button>
+
+<p id="respuesta"></p>
+
+</div>
+
+<script>
+function registrar(){
+    let correo = document.getElementById("correo").value;
+    let usuario = document.getElementById("usuario").value;
+    let password = document.getElementById("contraseña").value;
+    let codigo = parseInt(document.getElementById("codigo").value);
+
+    fetch("/registro", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ correo, usuario, password, codigo })
+    })
+    .then(res => res.json())
+    .then(data => {
+        document.getElementById("respuesta").textContent = data.mensaje;
+    });
+}
+
+function login(){
+    let correo = document.getElementById("correoLogin").value;
+    let password = document.getElementById("contraseñaLogin").value;
+
+    fetch("/login", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ correo, password })
+    })
+    .then(res => res.json())
+    .then(data => {
+        document.getElementById("respuesta").textContent = data.mensaje;
+    });
+}
+</script>
+
 </body>
-
 </html>
