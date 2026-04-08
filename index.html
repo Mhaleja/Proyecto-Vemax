@@ -6,8 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VEMAX</title>
 
-    <link rel="shortcut icon" href="icon/VEMAX.png" type="image/x-icon">
-    <link rel="stylesheet" href="estilos.css">
+ 
+    <link rel="shortcut icon" href="/icon/VEMAX.png" type="image/x-icon">
+    <link rel="stylesheet" href="/estilos.css">
 </head>
 
 <body>
@@ -47,7 +48,7 @@
                         <button type="button" onclick="login()">Iniciar sesión</button>
 
                         <button type="button">
-                            <img src="icon/google.png" alt="google" class="google">
+                            <img src="/icon/google.png" alt="google" class="google">
                             Google
                         </button>
                     </div>
@@ -79,7 +80,7 @@
                         <button type="button" onclick="registrar()">Registrarse</button>
 
                         <button type="button">
-                            <img src="icon/google.png" alt="google" class="google">
+                            <img src="/icon/google.png" alt="google" class="google">
                             Google
                         </button>
                     </div>
@@ -103,8 +104,8 @@
 
     </div>
 
-    <!-- SCRIPT DE ANIMACIONES -->
-    <script src="animaciones.js"></script>
+    <!-- JS -->
+    <script src="/animaciones.js"></script>
 
     <!-- FUNCIONES -->
     <script>
@@ -121,7 +122,7 @@
             body: JSON.stringify({ 
                 correo: correo,
                 usuario: usuario,
-                contrasena: password,   
+                contrasena: password,
                 codigo: 123             
             })
         })

@@ -1,20 +1,23 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
 app = FastAPI()
+
+app.mount("/", StaticFiles(directory=".", html=True), name="static")
 
 usuarios = []
 
 class RegistroModel(BaseModel):
     correo: str
     usuario: str
-    contraseña: str
+    contrasena: str
     codigo: int
 
 class LoginModel(BaseModel):
     correo: str
-    contraseña: str
+    contrasena: str
 
 
 @app.get("/")
@@ -43,7 +46,7 @@ def registrar(datos: RegistroModel):
 def login(datos: LoginModel):
     for usuario in usuarios:
         if usuario["correo"] == datos.correo:
-            if usuario["contraseña"] == datos.contraseña:
+            if usuario["contrasena"] == datos.contrasena:
                 return {"mensaje": f"Bienvenido {usuario['usuario']}"}
             else:
                 return {"mensaje": "Contraseña incorrecta"}
