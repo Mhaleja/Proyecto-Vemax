@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VEMAX</title>
-    
+
     <link rel="shortcut icon" href="/static/icon/VEMAX.png" type="image/x-icon">
     <link rel="stylesheet" href="/static/estilos.css">
 </head>
@@ -105,7 +105,6 @@
 
     <script src="/static/animaciones.js"></script>
 
-    <!-- FUNCIONES -->
     <script>
     function registrar(){
         let correo = document.getElementById("correo").value;
@@ -162,8 +161,12 @@
 
             if(data.mensaje){
                 alert(data.mensaje);
+
+                setTimeout(() => {
+                    window.location.href = "/dashboard";
+                }, 1000);
             } else {
-                alert("Error en el inicio de sesion");
+                alert("Error en el inicio de sesión");
             }
         })
         .catch(error => {

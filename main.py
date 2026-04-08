@@ -44,3 +44,7 @@ def login(datos: LoginModel):
                 return {"mensaje": "Contraseña incorrecta"}
 
     return {"mensaje": "El usuario no existe"}
+
+@app.get("/dashboard")
+def dashboard():
+    return FileResponse("pagina_des.html")
