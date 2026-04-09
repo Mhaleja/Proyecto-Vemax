@@ -24,21 +24,18 @@
             font-weight: bold;
         }
 
-   
         .grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr); /* 2 columnas */
+            grid-template-columns: repeat(2, 1fr);
             gap: 20px;
             padding: 40px;
         }
 
-   
         .card {
             background: white;
             padding: 20px;
             border-radius: 10px;
             text-align: center;
-            box-shadow: 0px 4px 10px rgba(0,0,0,0.2);
         }
     </style>
 </head>
@@ -46,37 +43,18 @@
 <body>
 
     <div class="navbar">
-        <h1><span style="color: white;">VEMAX</span></h1>
-        <a href="/perfil"> Perfil</a>
-        <a href="#"> $ Gastos</a>
-        <a href="#"> Objetivos</a>
-        <a href="#"> Objetivos</a>
-        <a href="#">🔔</a>
+        <h1 style="color:white;">VEMAX</h1>
+        <a href="/perfil">Perfil</a>
     </div>
 
-
     <div class="grid">
-
+        <div class="card"><h3>Balance mensual</h3></div>
+        <div class="card"><h3>Gasto mensual</h3></div>
+        <div class="card"><h3>Objetivo</h3></div>
         <div class="card">
-            <h3>Balance mensual</h3>
-         
+            <h3>Gráfico</h3>
+            <img src="Imagen3.png" width="100%">
         </div>
-
-        <div class="card">
-            <h3>Gasto mensual</h3>
-       
-        </div>
-
-        <div class="card">
-            <h3>Objetivo de ahorro</h3>
-        
-        </div>
-
-        <div class="card">
-            <h3>Gráfico gastos</h3>
-            <img src="Imagen3.png" alt="Imagen3">
-        </div>
-
     </div>
 
 </body>

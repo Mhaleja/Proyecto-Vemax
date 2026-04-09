@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VEMAX</title>
 
-    <link rel="shortcut icon" href="/static/icon/VEMAX.png" type="image/x-icon">
-    <link rel="stylesheet" href="/static/estilos.css">
+    <link rel="shortcut icon" href="icon/VEMAX.png">
+    <link rel="stylesheet" href="estilos.css">
 </head>
 
 <body>
@@ -18,92 +18,46 @@
                 <span>VEMAX</span>
             </div>
 
-            <div class="form" id="form">
+            <div class="form">
 
-                
+                <!-- LOGIN -->
                 <form class="inicio">
                     <h2>Bienvenido de nuevo</h2>
-                    <p>¡Hola! Es momento de organizar las nueces del día. ¡Entra y revisa tu saldo!</p>
 
                     <div class="input">
-                        <label>Correo Electronico</label>
-                        <input type="email" id="correoLogin" placeholder="Ingresa tu correo electronico">
+                        <label>Correo</label>
+                        <input type="email" id="correoLogin">
                     </div>
 
                     <div class="input">
                         <label>Contraseña</label>
-                        <input type="password" id="passwordLogin" placeholder="Ingresa tu contraseña">
+                        <input type="password" id="passwordLogin">
                     </div>
 
-                    <div class="recordatorio">
-                        <div class="revisalacaja">
-                            <input type="checkbox" id="terminos">
-                            <label for="terminos">Recuérdame durante 30 días</label>
-                        </div>
-                        <span class="olvidaste">¿Olvidaste la contraseña?</span>
-                    </div>
+                    <button type="button" onclick="login()">Iniciar sesión</button>
 
-                    <div class="botones">
-                        <button type="button" onclick="login()">Iniciar sesión</button>
-
-                        <button type="button">
-                            <img src="/static/icon/google.png" alt="google" class="google">
-                            Google
-                        </button>
-                    </div>
-
-                    <p class="cuenta">¿No tienes una cuenta? <a href="#" id="sign-up">Regístrate</a></p>
+                    <button type="button">
+                        <img src="icon/google.png" width="20">
+                        Google
+                    </button>
                 </form>
 
-        
+                <!-- REGISTRO -->
                 <form class="registro">
-                    <h2>Crea tu cuenta</h2>
-                    <p>Bienvenida/o a Vemax. Estamos listos para ayudarte a gestionar tus "nueces".</p>
+                    <h2>Crear cuenta</h2>
 
-                    <div class="input">
-                        <label>Usuario</label>
-                        <input type="text" id="usuario" placeholder="Ingresa tu usuario">
-                    </div>
+                    <input type="text" id="usuario" placeholder="Usuario">
+                    <input type="email" id="correo" placeholder="Correo">
+                    <input type="password" id="password" placeholder="Contraseña">
 
-                    <div class="input">
-                        <label>Correo Electronico</label>
-                        <input type="email" id="correo" placeholder="Ingresa tu correo electronico">
-                    </div>
-
-                    <div class="input">
-                        <label>Contraseña</label>
-                        <input type="password" id="password" placeholder="Ingresa tu contraseña">
-                    </div>
-
-                    <div class="botones">
-                        <button type="button" onclick="registrar()">Registrarse</button>
-
-                        <button type="button">
-                            <img src="/static/icon/google.png" alt="google" class="google">
-                            Google
-                        </button>
-                    </div>
-
-                    <p class="cuenta">¿Ya tienes una cuenta? <a href="#" id="sign-in">Iniciar Sesión</a></p>
+                    <button type="button" onclick="registrar()">Registrarse</button>
                 </form>
 
             </div>
-
-            <div class="inferior">
-                <span>VEMAX</span>
-            </div>
-
         </div>
-
-        <!-- PARTE DERECHA -->
-        <div class="part2-banner" id="banner">
-            <div class="circle"></div>
-            <div class="circle-2"></div>
-        </div>
-
     </div>
 
-    <script src="/static/animaciones.js"></script>
+    <script src="animaciones.js"></script>
 
     <script>
     function registrar(){
@@ -113,32 +67,17 @@
 
         fetch("/registro", {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ 
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({
                 correo: correo,
                 usuario: usuario,
                 contrasena: password,
-                codigo: 123             
+                codigo: 123
             })
         })
         .then(res => res.json())
-        .then(data => {
-            console.log(data);
-
-            if(data.mensaje){
-                alert(data.mensaje);
-            } else if(data.detail){
-                alert(data.detail);
-            } else {
-                alert("Error inesperado");
-            }
-        })
-        .catch(error => {
-            console.error("Error:", error);
-            alert("Error en conexión");
-        });
+        .then(data => alert(data.mensaje))
+        .catch(() => alert("Error"));
     }
 
     function login(){
@@ -147,32 +86,21 @@
 
         fetch("/login", {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ 
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({
                 correo: correo,
-                contrasena: password   
+                contrasena: password
             })
         })
         .then(res => res.json())
         .then(data => {
-            console.log(data);
+            alert(data.mensaje);
 
-            if(data.mensaje){
-                alert(data.mensaje);
-
-                setTimeout(() => {
-                    window.location.href = "/dashboard";
-                }, 1000);
-            } else {
-                alert("Error en el inicio de sesión");
-            }
+            setTimeout(() => {
+                window.location.href = "/dashboard";
+            }, 1000);
         })
-        .catch(error => {
-            console.error("Error:", error);
-            alert("Error en conexión");
-        });
+        .catch(() => alert("Error"));
     }
     </script>
 
