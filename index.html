@@ -1,68 +1,179 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VEMAX</title>
-
+    
+    <link rel="shortcut icon" href="/static/icon/VEMAX.png" type="image/x-icon">
     <link rel="stylesheet" href="/static/estilos.css">
-    <link rel="shortcut icon" href="/static/icon/VEMAX.png">
 </head>
 
 <body>
-<div class="container">
+    <div class="container">
+        <div class="part1-container">
 
-    <h1>VEMAX</h1>
+            <div class="encabezado">
+                <span>VEMAX</span>
+            </div>
 
-    <h2>Login</h2>
-    <input type="email" id="correoLogin" placeholder="Correo">
-    <input type="password" id="passwordLogin" placeholder="Contraseña">
-    <button onclick="login()">Entrar</button>
+            <div class="form" id="form">
 
-  
-    <h2>Registro</h2>
-    <input type="text" id="usuario" placeholder="Usuario">
-    <input type="email" id="correo" placeholder="Correo">
-    <input type="password" id="password" placeholder="Contraseña">
-    <button onclick="registrar()">Registrarse</button>
+                <!-- LOGIN -->
+                <form class="inicio">
+                    <h2>Bienvenido de nuevo</h2>
+                    <p>¡Hola! Es momento de organizar las nueces del día. ¡Entra y revisa tu saldo!</p>
 
-</div>
+                    <div class="input">
+                        <label>Correo Electronico</label>
+                        <input type="email" id="correoLogin" placeholder="Ingresa tu correo electronico">
+                    </div>
 
-<script src="/static/animaciones.js"></script>
+                    <div class="input">
+                        <label>Contraseña</label>
+                        <input type="password" id="passwordLogin" placeholder="Ingresa tu contraseña">
+                    </div>
 
-<script>
-function registrar(){
-    fetch("/registro", {
-        method: "POST",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({
-            correo: document.getElementById("correo").value,
-            usuario: document.getElementById("usuario").value,
-            contrasena: document.getElementById("password").value,
-            codigo: 123
+                    <div class="recordatorio">
+                        <div class="revisalacaja">
+                            <input type="checkbox" id="terminos">
+                            <label for="terminos">Recuérdame durante 30 días</label>
+                        </div>
+                        <span class="olvidaste">¿Olvidaste la contraseña?</span>
+                    </div>
+
+                    <div class="botones">
+                        <button type="button" onclick="login()">Iniciar sesión</button>
+
+                        <button type="button">
+                            <img src="/static/icon/google.png" alt="google" class="google">
+                            Google
+                        </button>
+                    </div>
+
+                    <p class="cuenta">¿No tienes una cuenta? <a href="#" id="sign-up">Regístrate</a></p>
+                </form>
+
+                <!-- REGISTRO -->
+                <form class="registro">
+                    <h2>Crea tu cuenta</h2>
+                    <p>Bienvenida/o a Vemax. Estamos listos para ayudarte a gestionar tus "nueces".</p>
+
+                    <div class="input">
+                        <label>Usuario</label>
+                        <input type="text" id="usuario" placeholder="Ingresa tu usuario">
+                    </div>
+
+                    <div class="input">
+                        <label>Correo Electronico</label>
+                        <input type="email" id="correo" placeholder="Ingresa tu correo electronico">
+                    </div>
+
+                    <div class="input">
+                        <label>Contraseña</label>
+                        <input type="password" id="password" placeholder="Ingresa tu contraseña">
+                    </div>
+
+                    <div class="botones">
+                        <button type="button" onclick="registrar()">Registrarse</button>
+
+                        <button type="button">
+                            <img src="/static/icon/google.png" alt="google" class="google">
+                            Google
+                        </button>
+                    </div>
+
+                    <p class="cuenta">¿Ya tienes una cuenta? <a href="#" id="sign-in">Iniciar Sesión</a></p>
+                </form>
+
+            </div>
+
+            <div class="inferior">
+                <span>VEMAX 2025</span>
+            </div>
+
+        </div>
+
+        <!-- PARTE DERECHA -->
+        <div class="part2-banner" id="banner">
+            <div class="circle"></div>
+            <div class="circle-2"></div>
+        </div>
+
+    </div>
+
+    <script src="/static/animaciones.js"></script>
+
+    <!-- FUNCIONES -->
+    <script>
+    function registrar(){
+        let correo = document.getElementById("correo").value;
+        let usuario = document.getElementById("usuario").value;
+        let password = document.getElementById("password").value;
+
+        fetch("/registro", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ 
+                correo: correo,
+                usuario: usuario,
+                contrasena: password,
+                codigo: 123             
+            })
         })
-    })
-    .then(res => res.json())
-    .then(data => alert(data.mensaje));
-}
+        .then(res => res.json())
+        .then(data => {
+            console.log(data);
 
-function login(){
-    fetch("/login", {
-        method: "POST",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({
-            correo: document.getElementById("correoLogin").value,
-            contrasena: document.getElementById("passwordLogin").value
+            if(data.mensaje){
+                alert(data.mensaje);
+            } else if(data.detail){
+                alert(data.detail);
+            } else {
+                alert("Error inesperado");
+            }
         })
-    })
-    .then(res => res.json())
-    .then(data => {
-        alert(data.mensaje);
-        if (data.mensaje.includes("Bienvenido")) {
-            window.location.href = "/dashboard";
-        }
-    });
-}
-</script>
+        .catch(error => {
+            console.error("Error:", error);
+            alert("Error en conexión");
+        });
+    }
+
+    function login(){
+        let correo = document.getElementById("correoLogin").value;
+        let password = document.getElementById("passwordLogin").value;
+
+        fetch("/login", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ 
+                correo: correo,
+                contrasena: password   
+            })
+        })
+        .then(res => res.json())
+        .then(data => {
+            console.log(data);
+
+            if(data.mensaje){
+                alert(data.mensaje);
+                window.location.href = "/dashboard";
+            } else {
+                alert("Error en el inicio de sesion");
+            }
+        })
+        .catch(error => {
+            console.error("Error:", error);
+            alert("Error en conexión");
+        });
+    }
+    </script>
 
 </body>
 </html>
+

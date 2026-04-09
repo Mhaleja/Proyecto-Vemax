@@ -1,14 +1,12 @@
-from fastapi import FastAPI
-from fastapi.responses import HTMLResponse
+from fastapi import FastAPI, HTTPException
+from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
+from pydantic import BaseModel
 
 app = FastAPI()
 
-app.mount("/static", StaticFiles(directory="."), name="static")
-
+app.mount("/static", StaticFiles(directory=".", html=True), name="static")
 usuarios = []
-
-from pydantic import BaseModel
 
 class RegistroModel(BaseModel):
     correo: str
@@ -21,10 +19,9 @@ class LoginModel(BaseModel):
     contrasena: str
 
 
-@app.get("/", response_class=HTMLResponse)
+@app.get("/")
 def home():
-    with open("templates/index.html", encoding="utf-8") as f:
-        return f.read()
+    return FileResponse("index.html")
 
 @app.get("/dashboard", response_class=HTMLResponse)
 def dashboard():
@@ -36,21 +33,23 @@ def perfil():
     with open("templates/perfil.html", encoding="utf-8") as f:
         return f.read()
 
-
-
-@app.post("/registro")
+@app.post("/registro") 
 def registrar(datos: RegistroModel):
-    nuevo = datos.dict()
-    nuevo["id"] = len(usuarios) + 1
-    usuarios.append(nuevo)
-    return {"mensaje": f"Usuario {datos.usuario} registrado"}
+    asignarid = len(usuarios) + 1
+    nuevoUsuario = datos.dict()
+    nuevoUsuario["id"] = asignarid
+    usuarios.append(nuevoUsuario)
+
+    return {"mensaje": f"Usuario {datos.usuario} registrado correctamente"}
 
 
 @app.post("/login")
 def login(datos: LoginModel):
-    for u in usuarios:
-        if u["correo"] == datos.correo:
-            if u["contrasena"] == datos.contrasena:
-                return {"mensaje": f"Bienvenido {u['usuario']}"}
-            return {"mensaje": "Contraseña incorrecta"}
-    return {"mensaje": "Usuario no existe"}
+    for usuario in usuarios:
+        if usuario["correo"] == datos.correo:
+            if usuario["contrasena"] == datos.contrasena:
+                return {"mensaje": f"Bienvenido {usuario['usuario']}"}
+            else:
+                return {"mensaje": "Contraseña incorrecta"}
+
+    return {"mensaje": "El usuario no existe"}
