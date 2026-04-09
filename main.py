@@ -1,11 +1,11 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
 app = FastAPI()
+app.mount("/static", StaticFiles(directory="."), name="static")
 
-app.mount("/static", StaticFiles(directory=".", html=True), name="static")
 usuarios = []
 
 class RegistroModel(BaseModel):
@@ -23,23 +23,20 @@ class LoginModel(BaseModel):
 def home():
     return FileResponse("index.html")
 
-@app.get("/dashboard", response_class=HTMLResponse)
+@app.get("/dashboard")
 def dashboard():
-    with open("templates/pagina_des.html", encoding="utf-8") as f:
-        return f.read()
+    return FileResponse("pagina_des.html")
 
-@app.get("/perfil", response_class=HTMLResponse)
+@app.get("/perfil")
 def perfil():
-    with open("templates/perfil.html", encoding="utf-8") as f:
-        return f.read()
+    return FileResponse("perfil.html")
 
-@app.post("/registro") 
+
+@app.post("/registro")
 def registrar(datos: RegistroModel):
-    asignarid = len(usuarios) + 1
-    nuevoUsuario = datos.dict()
-    nuevoUsuario["id"] = asignarid
-    usuarios.append(nuevoUsuario)
-
+    nuevo = datos.dict()
+    nuevo["id"] = len(usuarios) + 1
+    usuarios.append(nuevo)
     return {"mensaje": f"Usuario {datos.usuario} registrado correctamente"}
 
 
@@ -49,7 +46,6 @@ def login(datos: LoginModel):
         if usuario["correo"] == datos.correo:
             if usuario["contrasena"] == datos.contrasena:
                 return {"mensaje": f"Bienvenido {usuario['usuario']}"}
-            else:
-                return {"mensaje": "Contraseña incorrecta"}
+            return {"mensaje": "Contraseña incorrecta"}
 
     return {"mensaje": "El usuario no existe"}
