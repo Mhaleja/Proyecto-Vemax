@@ -1,108 +1,68 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VEMAX</title>
 
-    <link rel="shortcut icon" href="icon/VEMAX.png">
-    <link rel="stylesheet" href="estilos.css">
+    <link rel="stylesheet" href="/static/estilos.css">
+    <link rel="shortcut icon" href="/static/icon/VEMAX.png">
 </head>
 
 <body>
-    <div class="container">
-        <div class="part1-container">
+<div class="container">
 
-            <div class="encabezado">
-                <span>VEMAX</span>
-            </div>
+    <h1>VEMAX</h1>
 
-            <div class="form">
+    <h2>Login</h2>
+    <input type="email" id="correoLogin" placeholder="Correo">
+    <input type="password" id="passwordLogin" placeholder="Contraseña">
+    <button onclick="login()">Entrar</button>
 
-                <!-- LOGIN -->
-                <form class="inicio">
-                    <h2>Bienvenido de nuevo</h2>
+  
+    <h2>Registro</h2>
+    <input type="text" id="usuario" placeholder="Usuario">
+    <input type="email" id="correo" placeholder="Correo">
+    <input type="password" id="password" placeholder="Contraseña">
+    <button onclick="registrar()">Registrarse</button>
 
-                    <div class="input">
-                        <label>Correo</label>
-                        <input type="email" id="correoLogin">
-                    </div>
+</div>
 
-                    <div class="input">
-                        <label>Contraseña</label>
-                        <input type="password" id="passwordLogin">
-                    </div>
+<script src="/static/animaciones.js"></script>
 
-                    <button type="button" onclick="login()">Iniciar sesión</button>
-
-                    <button type="button">
-                        <img src="icon/google.png" width="20">
-                        Google
-                    </button>
-                </form>
-
-                <!-- REGISTRO -->
-                <form class="registro">
-                    <h2>Crear cuenta</h2>
-
-                    <input type="text" id="usuario" placeholder="Usuario">
-                    <input type="email" id="correo" placeholder="Correo">
-                    <input type="password" id="password" placeholder="Contraseña">
-
-                    <button type="button" onclick="registrar()">Registrarse</button>
-                </form>
-
-            </div>
-        </div>
-    </div>
-
-    <script src="animaciones.js"></script>
-
-    <script>
-    function registrar(){
-        let correo = document.getElementById("correo").value;
-        let usuario = document.getElementById("usuario").value;
-        let password = document.getElementById("password").value;
-
-        fetch("/registro", {
-            method: "POST",
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({
-                correo: correo,
-                usuario: usuario,
-                contrasena: password,
-                codigo: 123
-            })
+<script>
+function registrar(){
+    fetch("/registro", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({
+            correo: document.getElementById("correo").value,
+            usuario: document.getElementById("usuario").value,
+            contrasena: document.getElementById("password").value,
+            codigo: 123
         })
-        .then(res => res.json())
-        .then(data => alert(data.mensaje))
-        .catch(() => alert("Error"));
-    }
+    })
+    .then(res => res.json())
+    .then(data => alert(data.mensaje));
+}
 
-    function login(){
-        let correo = document.getElementById("correoLogin").value;
-        let password = document.getElementById("passwordLogin").value;
-
-        fetch("/login", {
-            method: "POST",
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({
-                correo: correo,
-                contrasena: password
-            })
+function login(){
+    fetch("/login", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({
+            correo: document.getElementById("correoLogin").value,
+            contrasena: document.getElementById("passwordLogin").value
         })
-        .then(res => res.json())
-        .then(data => {
-            alert(data.mensaje);
-
-            setTimeout(() => {
-                window.location.href = "/dashboard";
-            }, 1000);
-        })
-        .catch(() => alert("Error"));
-    }
-    </script>
+    })
+    .then(res => res.json())
+    .then(data => {
+        alert(data.mensaje);
+        if (data.mensaje.includes("Bienvenido")) {
+            window.location.href = "/dashboard";
+        }
+    });
+}
+</script>
 
 </body>
 </html>

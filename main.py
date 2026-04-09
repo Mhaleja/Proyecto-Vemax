@@ -1,10 +1,14 @@
 from fastapi import FastAPI
-from fastapi.responses import FileResponse
-from pydantic import BaseModel
+from fastapi.responses import HTMLResponse
+from fastapi.staticfiles import StaticFiles
 
 app = FastAPI()
 
+app.mount("/static", StaticFiles(directory="."), name="static")
+
 usuarios = []
+
+from pydantic import BaseModel
 
 class RegistroModel(BaseModel):
     correo: str
@@ -17,19 +21,21 @@ class LoginModel(BaseModel):
     contrasena: str
 
 
-@app.get("/")
+@app.get("/", response_class=HTMLResponse)
 def home():
-    return FileResponse("index.html")
+    with open("templates/index.html", encoding="utf-8") as f:
+        return f.read()
 
-
-@app.get("/dashboard")
+@app.get("/dashboard", response_class=HTMLResponse)
 def dashboard():
-    return FileResponse("pagina_des.html")
+    with open("templates/pagina_des.html", encoding="utf-8") as f:
+        return f.read()
 
-
-@app.get("/perfil")
+@app.get("/perfil", response_class=HTMLResponse)
 def perfil():
-    return FileResponse("perfil.html")
+    with open("templates/perfil.html", encoding="utf-8") as f:
+        return f.read()
+
 
 
 @app.post("/registro")
