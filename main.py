@@ -48,3 +48,7 @@ def login(datos: LoginModel):
 @app.get("/dashboard")
 def dashboard():
     return FileResponse("pagina_des.html")
+
+@app.get("/perfil")
+def perfil():
+    return FileResponse("perfil.html")
