@@ -20,7 +20,7 @@
 
             <div class="form" id="form">
 
-                <!-- LOGIN -->
+               
                 <form class="inicio">
                     <h2>Bienvenido de nuevo</h2>
                     <p>¡Hola! Es momento de organizar las nueces del día. ¡Entra y revisa tu saldo!</p>
@@ -55,7 +55,7 @@
                     <p class="cuenta">¿No tienes una cuenta? <a href="#" id="sign-up">Regístrate</a></p>
                 </form>
 
-                <!-- REGISTRO -->
+
                 <form class="registro">
                     <h2>Crea tu cuenta</h2>
                     <p>Bienvenida/o a Vemax. Estamos listos para ayudarte a gestionar tus "nueces".</p>
@@ -95,7 +95,7 @@
 
         </div>
 
-        <!-- PARTE DERECHA -->
+        
         <div class="part2-banner" id="banner">
             <div class="circle"></div>
             <div class="circle-2"></div>
@@ -105,7 +105,7 @@
 
     <script src="/static/animaciones.js"></script>
 
-    <!-- FUNCIONES -->
+  
     <script>
     function registrar(){
         let correo = document.getElementById("correo").value;
@@ -142,35 +142,36 @@
         });
     }
 
-    function login(){
-        let correo = document.getElementById("correoLogin").value;
-        let password = document.getElementById("passwordLogin").value;
+   function login(){
+    let correo = document.getElementById("correoLogin").value;
+    let password = document.getElementById("passwordLogin").value;
 
-        fetch("/login", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ 
-                correo: correo,
-                contrasena: password   
-            })
+    fetch("/login", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ 
+            correo: correo,
+            contrasena: password   
         })
-        .then(res => res.json())
-        .then(data => {
-            console.log(data);
+    })
+    .then(res => res.json())
+    .then(data => {
+        console.log(data);
 
-            if(data.mensaje){
-                alert(data.mensaje);
-                window.location.href = "/dashboard";
-            } else {
-                alert("Error en el inicio de sesion");
-            }
-        })
-        .catch(error => {
-            console.error("Error:", error);
-            alert("Error en conexión");
-        });
+        // 🔥 SOLO entra si es correcto
+        if(data.mensaje.includes("Bienvenido")){
+            alert(data.mensaje);
+            window.location.href = "/dashboard";
+        } else {
+            alert(data.mensaje);
+        }
+    })
+    .catch(error => {
+        console.error("Error:", error);
+        alert("Error en conexión");
+    });
     }
     </script>
 
