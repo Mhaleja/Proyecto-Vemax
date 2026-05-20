@@ -1,23 +1,17 @@
 from src.models.user_model import RegistroModel, LoginModel
 
 class UserController:
-    # DIP: Aquí el controlador ya no crea la conexión ni depende de una base de datos específica.
-    # Solo recibe el repositorio y trabaja con él.
-    def __init__(self, repository):
-        self.repository = repository
+    # DIP: Aquí el controlador no crea el servicio ni depende de una clase concreta.
+    # Solo recibe el servicio ya creado y trabaja con él.
+    def __init__(self, auth_service):
+        self.auth_service = auth_service
 
     def registrar_usuario(self, datos: RegistroModel):
-        # SRP: El controlador no guarda datos directamente,
-        # simplemente manda esa tarea al repositorio.
-        self.repository.guardar(datos)
-        return {"mensaje": "Usuario registrado con éxito"}
+        # SRP: Aquí el controlador no guarda datos ni valida,
+        # solo manda la tarea de registrar al servicio de autenticación.
+       return self.auth_service.registrar_usuario(datos)
 
     def login_usuario(self, datos: LoginModel):
-        # Le pedimos al repositorio el usuario según el correo
-        usuario = self.repository.buscar_por_correo(datos.correo)
-        
-        # Acá queda únicamente la validación del login
-        if usuario and usuario["password"] == datos.password:
-            return {"mensaje": f"Bienvenido {usuario['usuario']}"}
-            
-        return {"mensaje": "Datos incorrectos"}
+        # SRP: Aquí el controlador no valida las credenciales directamente,
+        # solo manda la tarea de iniciar sesión al servicio de autenticación.
+        return self.auth_service.login_usuario(datos)

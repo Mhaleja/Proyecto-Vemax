@@ -4,6 +4,8 @@ from abc import ABC, abstractmethod
 # DIP y OCP:
 # Muchachas aquí na mas cree una clase abstracta que funciona como una guía,
 # Aquí solo definimos qué métodos debe tener cualquier repositorio de usuarios, sin importar cómo guarde los datos.
+# También se cumple OCP porque si después queremos usar una base de datos real,
+# podemos crear otra clase que herede de UserRepository sin modificar las demás capas.
 class UserRepository(ABC):
     @abstractmethod
     def guardar(self, usuario):
@@ -14,9 +16,9 @@ class UserRepository(ABC):
         pass
 
 # SRP:
-# Y esta clase se encarga únicamente de manejar
-# los usuarios en memoria, ya si después queremos usar una base de datos real,
-# podríamos crear otra clase que herede de UserRepository sin tener que cambiar el controlador.
+# Aquí se cumple porque esta clase tiene una sola responsabilidad:
+# guardar y buscar usuarios en memoria,
+# no valida login, no maneja rutas y no controla respuestas HTTP.
 class MemoryUserRepository(UserRepository):
     def __init__(self):
         # La base de datos ahora esta encapsulada aquí, no global
@@ -33,3 +35,4 @@ class MemoryUserRepository(UserRepository):
 
 # Instancia única para simular nuestra base de datos persistente en memoria
 user_repository_instance = MemoryUserRepository()
+

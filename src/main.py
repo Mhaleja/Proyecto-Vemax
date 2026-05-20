@@ -3,7 +3,7 @@ from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse
 from src.routers.user_routers import router as user_router
-from src.routers.event_routes import router as event_router
+from src.routers.event_routers import router as event_router
 
 app = FastAPI()
 
