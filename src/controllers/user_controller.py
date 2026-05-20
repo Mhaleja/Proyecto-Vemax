@@ -1,17 +1,23 @@
 from src.models.user_model import RegistroModel, LoginModel
 
-# Simulación de Base de Datos en memoria
-usuarios_db = []
-
 class UserController:
-    @staticmethod
-    def registrar_usuario(datos: RegistroModel):
-        usuarios_db.append(datos.dict())
+    # DIP: Aquí el controlador ya no crea la conexión ni depende de una base de datos específica.
+    # Solo recibe el repositorio y trabaja con él.
+    def __init__(self, repository):
+        self.repository = repository
+
+    def registrar_usuario(self, datos: RegistroModel):
+        # SRP: El controlador no guarda datos directamente,
+        # simplemente manda esa tarea al repositorio.
+        self.repository.guardar(datos)
         return {"mensaje": "Usuario registrado con éxito"}
 
-    @staticmethod
-    def login_usuario(datos: LoginModel):
-        for usuario in usuarios_db:
-            if usuario["correo"] == datos.correo and usuario["password"] == datos.password:
-                return {"mensaje": f"Bienvenido {usuario['usuario']}"}
+    def login_usuario(self, datos: LoginModel):
+        # Le pedimos al repositorio el usuario según el correo
+        usuario = self.repository.buscar_por_correo(datos.correo)
+        
+        # Acá queda únicamente la validación del login
+        if usuario and usuario["password"] == datos.password:
+            return {"mensaje": f"Bienvenido {usuario['usuario']}"}
+            
         return {"mensaje": "Datos incorrectos"}
