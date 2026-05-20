@@ -15,13 +15,3 @@ Backend: FastAPI (Python) para una gestión de datos rápida y robusta.
 Frontend: HTML5, CSS3 y JavaScript para una experiencia de usuario fluida.
 Visualización: Integración de gráficas para el análisis financiero.
 Control de Versiones: Git y GitHub.
-
-📂 Estructura del Proyecto
-Plaintext
-Proyecto-Vemax/
-├── src/                # Lógica del backend
-│   ├── static/         # Archivos CSS, JS e imágenes
-│   ├── templates/      # Archivos HTML (Frontend)
-│   └── main.py         # Punto de entrada de la aplicación
-├── requirements.txt    # Dependencias del proyecto
-└── README.md           # Documentación oficial
