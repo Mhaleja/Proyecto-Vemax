@@ -1,11 +1,10 @@
 #  VEMAX: Gestor de Finanzas Inteligentes
 
 <p align="center">
-  <img src="static/img/VEMAX.png" alt="VEMAX Logo" width="200"/>
+  <img src="/static/img/VEMAX.png" alt="VEMAX Logo" width="200"/>
 </p>
 
-VEMAX es una plataforma intuitiva diseñada para ayudarte a tomar el control total de tus finanzas personales. Olvídate de los registros en papel; con VEMAX puedes gestionar tus ingresos y gastos de forma eficiente, visualizando tu salud financiera mediante gráficas dinámicas y tablas detalladas.
-
+Nuestra API tiene como objetivo ayudar a los universitarios a llevar el control de sus gastos mediante el registro de sus ingresos y egresos monetarios
 ---
 
 ##  ¿Qué puedes hacer con VEMAX?
