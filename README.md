@@ -1,8 +1,5 @@
 #  VEMAX: Gestor de Finanzas Inteligentes
-
-<p align="center">
-  <img src="./static/img/VEMAX.png" alt="VEMAX Logo" width="200"/>
-</p>
+---
 
 Nuestra API tiene como objetivo ayudar a los universitarios a llevar el control de sus gastos mediante el registro de sus ingresos y egresos monetarios
 ---
