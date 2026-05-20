@@ -1,0 +1,249 @@
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap');
+
+*{
+   font-family: "Josefin Sans", sans-serif;
+   margin: 0; 
+   padding: 0;
+}
+
+body{
+        background-image: url('porfa.jpg'); 
+        background-repeat: no-repeat;       
+        background-size: cover;             
+        background-attachment: fixed;       
+        background-position: center;  
+        width: 100%;
+        height: 100vh;
+        border: 3px solid #62afe6c2;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        }
+
+        .container{
+            width: 64rem;
+            height: 40rem;
+            background-color: rgba(255, 255, 255, 0.826);
+            border-radius: 0.3rem;
+            display: flex;
+            justify-content: space-between;
+            overflow: hidden;
+            box-shadow: 0px 0px 10px rgb(123, 156, 185);
+        }
+
+        .part1-container{
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            padding: 1rem 1.2rem;
+        }
+
+        .part1-container .encabezado{
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-left: 0.9rem;
+            position: relative;
+        }
+
+        .part1-container .encabezado span::before{
+            content: '';
+            position: absolute;
+            width: 0.5rem;
+            height: 0.5rem;
+            border-radius: 50%;
+            background-color: #62afe6;
+            top: 50%;
+            left: -0.7rem;
+            transform: translateY(-50%);
+        }
+
+        .part1-container .inferior{
+            font-size: 0.6rem;
+            font-weight: 600;
+            opacity: 0.4;
+        }
+
+        .form{
+            height: 100%;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .inicio, .registro{
+            width: 55%;
+            position: absolute;
+            top: 50%;
+        }
+
+        .inicio{
+            transform: translateY(-50%);
+            transition: transform 0.8s, opacity 0.8s;
+            opacity: 1;
+        }
+
+        .form.toggle .inicio{
+            transform: translateY(-170%); 
+            opacity: 0; 
+        } 
+        
+
+        .registro{
+            transform: translateY(100%);
+            transition: transform 0.8s, opacity 0.8s;
+            opacity: 0;
+        }
+
+         .form.toggle .registro{
+            transform: translateY(-50%);
+            opacity: 1;
+        }
+
+        .form h2{
+            font-weight: 600;
+            font-size: 1.5rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .form p{
+            font-size: 0.8rem;
+            margin-bottom: 1.8rem;
+        }
+
+        .form .input{
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+            margin-bottom: 0.9rem;
+        }
+
+        .form .input label{
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        .form .input input{
+            font-size: 0.7rem;
+            outline: none;
+            border: none;
+            border: 1px solid rgb(165, 157, 157);
+            border-radius: 0.2rem;
+            padding: 0.5rem;
+        }
+
+        .form .recordatorio{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .form .revisalacaja{
+            font-size: 0.7rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.2rem;
+        }
+
+        .form .olvidaste{
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: #62AEE6;
+            cursor: pointer;
+        }
+
+        .form .botones{
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+            margin-bottom: 1rem;
+        }
+
+        .form .botones button{
+            width: 100%;
+            padding: 0.7rem;
+            font-size: 0.8rem;
+            border-radius: 0.5rem;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .form .botones .google {
+            width: 1rem;
+        }
+
+        .form .botones button:first-child{
+            background-color: #62aee6;
+            color: white;
+        }
+
+        .form .botones button:last-child{
+            background-color: #3839399a;
+            color: white;
+            border: 2px solid #3839398e;
+        }
+
+        .form .cuenta{
+            text-align: center;
+            font-size: 0.75rem;
+        }
+
+        .part2-banner{
+            background-color: #62afe677;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .circle{
+            background-color: #383939;
+            width: 10rem;
+            height: 10rem;
+            border-radius: 50%;
+        }
+
+        .circle-2{
+            width: 16rem;
+            height: 16rem;
+            background-color: #62afe60e;
+            border-radius: 50%;
+            position: absolute;
+            backdrop-filter: blur(8px);
+            clip-path: inset(50% 0 0 0);
+            transition: clip-path 0.8s ease-in-out;
+        }
+
+        .part2-banner.toggle .circle-2{
+            clip-path: inset(0 0 50% 0);
+        }
+
+        @media(max-width:1088px){
+            .body{
+                background-image: url('porfa.jpg'); 
+                background-repeat: no-repeat;       
+                background-size: cover;             
+                background-attachment: fixed;       
+                background-position: center;  
+            }
+
+            .container{
+                flex-direction: column;
+            }
+
+            
+        }
+
+    
+    
