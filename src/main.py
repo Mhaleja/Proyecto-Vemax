@@ -1,33 +1,18 @@
+import os
 from fastapi import FastAPI
 from fastapi.responses import FileResponse
-from pydantic import BaseModel
+from fastapi.staticfiles import StaticFiles
+from src.routers.user_routers import router as user_router
+from src.routers.event_routes import router as event_router
 
 app = FastAPI()
 
-usuarios = []
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
-class RegistroModel(BaseModel):
-    correo: str
-    usuario: str
-    password: str
-    edad: int
-
-class LoginModel(BaseModel):
-    correo: str
-    password: str
+app.include_router(user_router)
+app.include_router(event_router)
 
 @app.get("/")
 def home():
-    return FileResponse("index.html")
-
-@app.post("/registro")
-def registrar(datos: RegistroModel):
-    usuarios.append(datos.dict())
-    return {"mensaje": "Usuario registrado"}
-
-@app.post("/login")
-def login(datos: LoginModel):
-    for usuario in usuarios:
-        if usuario["correo"] == datos.correo and usuario["password"] == datos.password:
-            return {"mensaje": f"Bienvenido {usuario['usuario']}"}
-    return {"mensaje": "Datos incorrectos"}
+    ruta_index = os.path.join("static", "templates", "index.html")
+    return FileResponse(ruta_index)

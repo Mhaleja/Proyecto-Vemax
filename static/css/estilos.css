@@ -7,7 +7,7 @@
 }
 
 body{
-        background-image: url('porfa.jpg'); 
+        background-image: url('../img/porfa.jpg'); 
         background-repeat: no-repeat;       
         background-size: cover;             
         background-attachment: fixed;       

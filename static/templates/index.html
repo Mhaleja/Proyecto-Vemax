@@ -1,116 +1,172 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
+
 <head>
-    <title>Mi API de Eventos</title>
-    <style>
-        body{
-        font-family: Arial;
-        background-color: #160642;
-        text-align: center;
-        margin: 0;
-        height: 100vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        }
-
-        .container{
-            width: 400px;
-            margin: auto;
-            background: rgba(255, 255, 255, 0.826);
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0px 0px 10px rgb(123, 156, 185);
-        }
-
-        input{
-            width: 90%;
-            padding: 8px;
-            margin: 5px;
-        }
-
-        button{
-            padding: 10px;
-            background-color: #143a62;
-            color: white;
-            border: none;
-            margin-top: 10px;
-            cursor: pointer;
-        }
-
-        button:hover{
-            background-color: #263748;
-        }
-
-        h2{
-            color: #333;
-        }
-    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VEMAX</title>
+    
+    <link rel="shortcut icon" href="static/img/VEMAX.png" type="image/png">
+    <link rel="stylesheet" href="static/css/estilos.css">
 </head>
 
 <body>
+    <div class="container">
+        <div class="part1-container">
 
-<div class="container">
+            <div class="encabezado">
+                <span>VEMAX</span>
+            </div>
 
-<h2>Registro</h2>
+            <div class="form" id="form">
 
-<input id="correo" placeholder="Correo"><br>
-<input id="usuario" placeholder="Usuario"><br>
-<input id="password" type="password" placeholder="Contraseña"><br>
-<input id="edad" type="number" placeholder="Edad"><br>
+                <form class="inicio">
+                    <h2>Bienvenido de nuevo</h2>
+                    <p>¡Hola! Es momento de organizar las nueces del día. ¡Entra y revisa tu saldo!</p>
 
-<button onclick="registrar()">Registrarse</button>
+                    <div class="input">
+                        <label>Correo Electrónico</label>
+                        <input type="email" id="correoLogin" placeholder="Ingresa tu correo electrónico">
+                    </div>
 
-<hr>
+                    <div class="input">
+                        <label>Contraseña</label>
+                        <input type="password" id="passwordLogin" placeholder="Ingresa tu contraseña">
+                    </div>
 
-<h2>Login</h2>
+                    <div class="recordatorio">
+                        <div class="revisalacaja">
+                            <input type="checkbox" id="terminos">
+                            <label for="terminos">Recuérdame durante 30 días</label>
+                        </div>
+                        <span class="olvidaste">¿Olvidaste la contraseña?</span>
+                    </div>
 
-<input id="correoLogin" placeholder="Correo"><br>
-<input id="passwordLogin" type="password" placeholder="Contraseña"><br>
+                    <div class="botones">
+                        <button type="button" onclick="login()">Iniciar sesión</button>
 
-<button onclick="login()">Entrar</button>
+                            <button type="button">
+                            <img src="/static/img/google.png" alt="google" class="google">
+                            Google
+                        </button>
+                    </div>
 
-<p id="respuesta"></p>
+                    <p class="cuenta">¿No tienes una cuenta? <a href="#" id="sign-up">Regístrate</a></p>
+                </form>
 
-</div>
+                <form class="registro">
+                    <h2>Crea tu cuenta</h2>
+                    <p>Bienvenida/o a Vemax. Estamos listos para ayudarte a gestionar tus "nueces".</p>
 
-<script>
-function registrar(){
-    let correo = document.getElementById("correo").value;
-    let usuario = document.getElementById("usuario").value;
-    let password = document.getElementById("password").value;
-    let edad = parseInt(document.getElementById("edad").value);
+                    <div class="input">
+                        <label>Usuario</label>
+                        <input type="text" id="usuario" placeholder="Ingresa tu usuario">
+                    </div>
 
-    fetch("/registro", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ correo, usuario, password, edad })
-    })
-    .then(res => res.json())
-    .then(data => {
-        document.getElementById("respuesta").textContent = data.mensaje;
-    });
-}
+                    <div class="input">
+                        <label>Correo Electrónico</label>
+                        <input type="email" id="correo" placeholder="Ingresa tu correo electrónico">
+                    </div>
 
-function login(){
-    let correo = document.getElementById("correoLogin").value;
-    let password = document.getElementById("passwordLogin").value;
+                    <div class="input">
+                        <label>Contraseña</label>
+                        <input type="password" id="password" placeholder="Ingresa tu contraseña">
+                    </div>
 
-    fetch("/login", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ correo, password })
-    })
-    .then(res => res.json())
-    .then(data => {
-        document.getElementById("respuesta").textContent = data.mensaje;
-    });
-}
-</script>
+                    <div class="botones">
+                        <button type="button" onclick="registrar()">Registrarse</button>
 
+                        <button type="button">
+                            <img src="/static/img/google.png" alt="google" class="google">
+                            Google
+                        </button>
+                    </div>
+
+                    <p class="cuenta">¿Ya tienes una cuenta? <a href="#" id="sign-in">Iniciar Sesión</a></p>
+                </form>
+
+            </div>
+
+            <div class="inferior">
+                <span>VEMAX 2026</span>
+            </div>
+
+        </div>
+
+        <div class="part2-banner" id="banner">
+            <div class="circle"></div>
+            <div class="circle-2"></div>
+        </div>
+
+    </div>
+
+    <script src="/static/js/animaciones.js"></script>
+
+    <script>
+    function registrar(){
+        let correo = document.getElementById("correo").value;
+        let usuario = document.getElementById("usuario").value;
+        let password = document.getElementById("password").value;
+
+        fetch("/registro", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ 
+                correo: correo,
+                usuario: usuario,
+                password: password, 
+                edad: 0 
+            })
+        })
+        .then(res => res.json())
+        .then(data => {
+            console.log(data);
+            if(data.mensaje){
+                alert(data.mensaje);
+            } else if(data.detail){
+                alert(JSON.stringify(data.detail));
+            } else {
+                alert("Error inesperado");
+            }
+        })
+        .catch(error => {
+            console.error("Error:", error);
+            alert("Error en conexión");
+        });
+    }
+
+    function login(){
+        let correo = document.getElementById("correoLogin").value;
+        let password = document.getElementById("passwordLogin").value;
+
+        fetch("/login", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ 
+                correo: correo,
+                password: password 
+            })
+        })
+        .then(res => res.json())
+        .then(data => {
+            console.log(data);
+            if(data.mensaje && data.mensaje.includes("Bienvenido")){
+                alert(data.mensaje);
+                window.location.href = "/dashboard";
+            } else {
+                alert(data.mensaje || "Datos incorrectos");
+            }
+        })
+        .catch(error => {
+            console.error("Error:", error);
+            alert("Error en conexión");
+        });
+    }
+    </script>
+    <script src="/static/js/animaciones.js"></script>
 </body>
 </html>
