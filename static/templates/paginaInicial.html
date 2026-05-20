@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VEMAX</title>
+  <link rel="stylesheet" href="/static/css/styleInicial.css">
+</head>
+<body>
+
+  <!-- Fondo animado -->
+  <div class="bg-canvas">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+    <div class="blob blob-4"></div>
+  </div>
+
+  <div class="page">
+
+    <!-- ─── NAVEGACIÓN ─── -->
+    <nav>
+      <div class="nav-logo">
+        <div class="logo-mark">
+          <svg viewBox="0 0 24 24">
+            <img src="/static/img/VEMAX.png" alt="Logo VEMAX" width="150" height="80">
+          </svg>
+        </div>
+        <span class="logo-text">VEMAX</span>
+      </div>
+
+      <div class="nav-links">
+        <a href="#detalles">Detalles</a>
+        <a href="#conocenos">Conócenos</a>
+      </div>
+
+      <button class="nav-cta" id="btn-login" onclick="handleLogin()">Ingresar</button>
+    </nav>
+
+    <!-- ─── HERO ─── -->
+    <section class="hero">
+      <div class="hero-badge">
+        <span class="badge-dot"></span>
+        Gestiona tus finanzas personales como bellotas
+      </div>
+
+      <h1>Tu dinero,<br><em>bajo control</em></h1>
+
+      <p>
+        VEMAX es el lugar seguro para mantener el control de tu dinero,
+        añade ingresos, gatos y metas para poder hacerlas realidad.
+      </p>
+
+      <div class="hero-actions">
+        <button class="btn-primary" id="btn-start" onclick="handleStart()">
+          Comienza ahora
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+               stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"/>
+            <polyline points="12 5 19 12 12 19"/>
+          </svg>
+        </button>
+      </div>
+    </section>
+
+    <!-- ─── PREVIEW DEL DASHBOARD ─── -->
+    <div class="preview-section">
+      <div class="preview-card">
+        <div class="preview-topbar">
+          <div class="dot dot-r"></div>
+          <div class="dot dot-y"></div>
+          <div class="dot dot-g"></div>
+        </div>
+
+        <div class="preview-grid">
+          <div class="metric-chip">
+            <div class="label">Balance total</div>
+            <div class="value">$15,700</div>
+            <div class="change">↑ 12% este mes</div>
+          </div>
+          <div class="metric-chip">
+            <div class="label">Ingresos</div>
+            <div class="value">$8,500</div>
+            <div class="change">↑ 6.2%</div>
+          </div>
+          <div class="metric-chip">
+            <div class="label">Gastos</div>
+            <div class="value">$6,222</div>
+            <div class="change neg">↑ 2.4%</div>
+          </div>
+          <div class="metric-chip">
+            <div class="label">Ahorros</div>
+            <div class="value">$32,913</div>
+            <div class="change">↑ 12%</div>
+          </div>
+        </div>
+
+        <div class="preview-bottom">
+          <div class="chart-block">
+            <div class="block-title">Flujo de dinero — 2025</div>
+            <div class="mini-chart" id="mini-chart">
+            </div>
+          </div>
+          <div class="savings-block">
+            <div class="block-title">Metas de ahorro</div>
+            <div class="saving-row">
+              <span class="saving-label">MacBook Pro</span>
+              <div class="saving-bar-bg">
+                <div class="saving-bar-fill" style="width: 72%"></div>
+              </div>
+              <span class="saving-pct">72%</span>
+            </div>
+            <div class="saving-row">
+              <span class="saving-label">Auto nuevo</span>
+              <div class="saving-bar-bg">
+                <div class="saving-bar-fill" style="width: 45%"></div>
+              </div>
+              <span class="saving-pct">45%</span>
+            </div>
+            <div class="saving-row">
+              <span class="saving-label">Casa nueva</span>
+              <div class="saving-bar-bg">
+                <div class="saving-bar-fill" style="width: 20%"></div>
+              </div>
+              <span class="saving-pct">20%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <section id="detalles">
+      <h2>Detalles  -  Tu reserva para el invierno</h2>
+      
+      <div class="detalles-grid">
+          <div class="card">
+              <h3>Recolecta</h3>
+              <p>Registra cada bellota que llega a tus manos (ingresos). Mantén un registro claro de tu dinero fácilmente.</p>
+          </div>
+
+          <div class="card">
+              <h3>Administra</h3>
+              <p>No todas las bellotas son iguales. Aprende a distinguir entre tus gastos necesarios y los antojos, para que tu reserva crezca sanamente.</p>
+          </div>
+
+          <div class="card">
+              <h3>Tu futuro a la vista</h3>
+              <p>Define tus metas. ¿Un viaje? ¿un juego deseado? Guarda tus bellotas hoy y mira cómo te acercas a tus sueños, paso a paso.</p>
+          </div>
+      </div>
+    </section>
+
+    <section id="conocenos">
+      <h2 class="title-conocenos">El grupo VEMAX</h2>
+
+      <div class="conocenos-container">
+          <div class="conocenos-image">
+              <img src="/static/img/ardillaConócenos.png" alt="Grupo VEMAX">
+          </div>
+
+          <div class="conocenos-text">
+              <p>Somos un equipo de estudiantes que, al igual que tú, entendemos que el mundo universitario puede ser estresante si no organizamos bien tus recursos.</p>
+              <p>Creamos VEMAX porque deseamos cambiar la forma en la que registramos nuestro dinero. Decidimos aprender de las ardillas: <strong>recolectar con inteligencia, guardar con propósito y disfrutar con tranquilidad.</strong></p>
+              <p>Nuestra misión no es complicarte con gráficas financieras aburridas. Queremos ser la herramienta ágil, visual y sencilla que te permita ver todo sobre tus finanzas.</p>
+          </div>
+      </div>
+    </section>
+
+    <footer id="contacto">
+      <div class="footer-content">
+          <h3>¿Tienes preguntas sobre VEMAX?</h3>
+          <p>Estamos aquí para ayudarte a organizar tus bellotas.</p>
+          
+          <div class="contact-info">
+              <a href="mailto:tu-correo@ejemplo.com">somosvemax@gmail.com</a>
+          </div>
+          
+          <p class="footer-copy">&copy; 2026 VEMAX - Gestión financiera para universitarios</p>
+      </div>
+    </footer>
+  </div>
+
+  <script src="/static/js/main.js"></script>
+</body>
+</html>
