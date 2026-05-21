@@ -27,14 +27,12 @@ function renderMiniChart() {
     .join('');
 }
 
-// --- Botón "Comenzar gratis" ---
 function handleStart() {
-    window.location.href = '/app';
+    window.location.href = "/registro";
 }
 
-// --- Botón "Ingresar" (nav) ---
 function handleLogin() {
-    window.location.href = '/app';
+    window.location.href = "/registro";
 }
 // ── Hover suave en feature pills ──────────
 function initPillHovers() {

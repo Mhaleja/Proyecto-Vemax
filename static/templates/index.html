@@ -6,8 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VEMAX</title>
     
-    <link rel="shortcut icon" href="static/img/VEMAX.png" type="image/png">
-    <link rel="stylesheet" href="static/css/estilos.css">
+    <!-- CORREGIDO: se agregó / al inicio -->
+    <link rel="shortcut icon" href="/static/img/VEMAX.png" type="image/png">
+    <link rel="stylesheet" href="/static/css/estilos.css">
 </head>
 
 <body>
@@ -45,7 +46,7 @@
                     <div class="botones">
                         <button type="button" onclick="login()">Iniciar sesión</button>
 
-                            <button type="button">
+                        <button type="button">
                             <img src="/static/img/google.png" alt="google" class="google">
                             Google
                         </button>
@@ -100,73 +101,48 @@
 
     </div>
 
-    <script src="/static/js/animaciones.js"></script>
+<script>
 
-    <script>
-    function registrar(){
-        let correo = document.getElementById("correo").value;
-        let usuario = document.getElementById("usuario").value;
-        let password = document.getElementById("password").value;
+function registrar(){
 
-        fetch("/registro", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ 
-                correo: correo,
-                usuario: usuario,
-                password: password, 
-                edad: 0 
-            })
-        })
-        .then(res => res.json())
-        .then(data => {
-            console.log(data);
-            if(data.mensaje){
-                alert(data.mensaje);
-            } else if(data.detail){
-                alert(JSON.stringify(data.detail));
-            } else {
-                alert("Error inesperado");
-            }
-        })
-        .catch(error => {
-            console.error("Error:", error);
-            alert("Error en conexión");
-        });
+    const usuario = document.getElementById("usuario").value.trim();
+    const correo = document.getElementById("correo").value.trim();
+    const password = document.getElementById("password").value.trim();
+
+    if(!usuario || !correo || !password){
+        alert("Completa todos los campos");
+        return;
     }
 
-    function login(){
-        let correo = document.getElementById("correoLogin").value;
-        let password = document.getElementById("passwordLogin").value;
+    // Guardar usuario registrado
+    localStorage.setItem("usuario", usuario);
+    localStorage.setItem("correo", correo);
 
-        fetch("/login", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ 
-                correo: correo,
-                password: password 
-            })
-        })
-        .then(res => res.json())
-        .then(data => {
-            console.log(data);
-            if(data.mensaje && data.mensaje.includes("Bienvenido")){
-                alert(data.mensaje);
-                window.location.href = "/dashboard";
-            } else {
-                alert(data.mensaje || "Datos incorrectos");
-            }
-        })
-        .catch(error => {
-            console.error("Error:", error);
-            alert("Error en conexión");
-        });
+    alert("Usuario registrado correctamente");
+
+    // Limpiar formulario
+    document.getElementById("usuario").value = "";
+    document.getElementById("correo").value = "";
+    document.getElementById("password").value = "";
+}
+
+
+function login(){
+
+    const correo = document.getElementById("correoLogin").value.trim();
+
+    const correoGuardado = localStorage.getItem("correo");
+
+    if(correo !== correoGuardado){
+        alert("Correo incorrecto");
+        return;
     }
-    </script>
-    <script src="/static/js/animaciones.js"></script>
+
+    window.location.href="/dashboard";
+}
+
+</script>
+<script src="/static/js/animaciones.js"></script>
 </body>
+
 </html>
