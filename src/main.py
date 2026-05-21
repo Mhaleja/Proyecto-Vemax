@@ -16,8 +16,8 @@ app.mount(
     name="static"
 )
 
-app.include_router(user_router)
-app.include_router(event_router)
+#app.include_router(user_router)
+#app.include_router(event_router)
 
 def leerHtml(nombreArc):
     ruta = ROOT_DIR / "static" / "templates" / nombreArc

@@ -1,5 +1,5 @@
 /* ============================================
-   SESSION SERVICE
+   SESIÓN
 ============================================ */
 
 const Session = {
@@ -11,33 +11,37 @@ const Session = {
         };
     },
 
-    cerrar() {
-        localStorage.removeItem("usuario");
-        localStorage.removeItem("correo");
-    }
+    guardar(usuario, correo) {
+        localStorage.setItem("usuario", usuario);
+        localStorage.setItem("correo", correo);
+    },
+
+cerrar() {
+    localStorage.removeItem("usuario");
+    localStorage.removeItem("correo");
+
+    window.location.href = "/";
+}
+
 };
 
 
 /* ============================================
-   CARGAR DATOS DEL USUARIO
+   CARGAR USUARIO EN DASHBOARD
 ============================================ */
 
 document.addEventListener("DOMContentLoaded", () => {
 
     const datos = Session.obtener();
 
-    if(datos.usuario){
-        document.getElementById("userName").textContent =
-            datos.usuario;
+    document.getElementById("userName").textContent =
+        datos.usuario || "Usuario";
 
-        document.getElementById("userFullName").textContent =
-            datos.usuario;
-    }
+    document.getElementById("userFullName").textContent =
+        datos.usuario || "Usuario";
 
-    if(datos.correo){
-        document.getElementById("userEmail").textContent =
-            datos.correo;
-    }
+    document.getElementById("userEmail").textContent =
+        datos.correo || "correo@gmail.com";
 
 });
 
@@ -47,9 +51,5 @@ document.addEventListener("DOMContentLoaded", () => {
 ============================================ */
 
 function cerrarSesion() {
-
     Session.cerrar();
-
-    window.location.href="/";
-
 }
