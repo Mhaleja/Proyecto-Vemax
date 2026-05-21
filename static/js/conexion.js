@@ -2,11 +2,24 @@
    FinSet Dashboard — Lógica y conexión con API
    ============================================ */
 
+// SRP:
+// Este archivo se encarga de manejar la logica del dashboard:
+// tema, datos, graficos, tablas, metas y notificaciones.
+// Aunque podria dividirse en mas archivos, por ahora se mantiene junto
+// para no romper la conexion actual del frontend.
+
+
+// DIP:
+// Centralizamos la ruta base de la API en una sola constante,
+// asi las funciones no dependen de una URL escrita manualmente en cada parte.
 const API_BASE = window.location.origin + '/api';
 
 // ============================================
 // TEMA — Modo claro / oscuro
 // ============================================
+
+// SRP:
+// Esta funcion solo se encarga de cambiar el tema claro u oscuro.
 
 function setTheme(mode) {
   if (mode === 'dark') {
@@ -41,6 +54,9 @@ function cssVar(name) {
 // UTILIDADES
 // ============================================
 
+// SRP:
+// Esta funcion solo muestra mensajes temporales en pantalla.
+
 function showToast(msg) {
   const t = document.getElementById('toast');
   t.textContent = msg;
@@ -52,6 +68,9 @@ function showToast(msg) {
   }, 3000);
 }
 
+// SRP:
+// Esta funcion solo formatea numeros para mostrarlos en la interfaz.
+
 function formatNum(n) {
   return Number(n).toLocaleString('en-US');
 }
@@ -59,6 +78,10 @@ function formatNum(n) {
 // ============================================
 // CAPA DE DATOS  —  fetchAPI con fallback
 // ============================================
+
+// DIP:
+// Esta funcion centraliza las llamadas a la API,
+// si despues cambia el backend, se modifica aqui y no en cada grafico o tabla.
 
 async function fetchAPI(endpoint, fallback) {
   try {
@@ -74,6 +97,10 @@ async function fetchAPI(endpoint, fallback) {
 // ============================================
 // DATOS DE EJEMPLO
 // ============================================
+
+// OCP:
+// Estos datos de ejemplo permiten que el dashboard siga funcionando
+// aunque el backend todavia no tenga esos endpoints listos.
 
 const MOCK = {
   summary: {
@@ -115,6 +142,9 @@ const MOCK = {
 // ============================================
 
 // ── 1. Tarjetas de resumen ──
+// SRP:
+// Esta funcion solo carga y muestra las tarjetas principales del resumen.
+
 async function loadSummary() {
   const d = await fetchAPI('/summary', MOCK.summary);
 // Limpiar usuario viejo guardado
@@ -128,6 +158,9 @@ async function loadSummary() {
   setBadge('savingsBadge', d.savings_change);
 }
 
+// SRP:
+// Esta funcion solo configura el badge de porcentaje.
+
 function setBadge(id, pct, invertColor = false) {
   const el    = document.getElementById(id);
   const isPos = pct >= 0;
@@ -138,6 +171,9 @@ function setBadge(id, pct, invertColor = false) {
 
 // ── 2. Gráfico de barras (flujo de dinero) ──
 let moneyChart;
+
+// SRP:
+// Esta funcion solo carga y renderiza el grafico semanal de ingresos y gastos.
 
 async function loadMoneyFlow() {
   const d   = await fetchAPI('/money-flow', MOCK.moneyFlow);
@@ -198,6 +234,10 @@ async function loadMoneyFlow() {
 }
 
 // ── 3. Gráfico donut (presupuesto) ──
+
+// SRP:
+// Esta funcion solo carga y renderiza el grafico mensual de presupuesto.
+
 let budgetChart;
 
 async function loadBudget() {
@@ -248,6 +288,9 @@ const CATEGORY_ICONS = {
   'Transporte':  '🛣️',
 };
 
+// SRP:
+// Esta funcion solo carga y muestra la tabla de transacciones.
+
 async function loadTransactions() {
   const list  = await fetchAPI('/transactions', MOCK.transactions);
   const tbody = document.getElementById('transactionsBody');
@@ -283,6 +326,10 @@ async function loadTransactions() {
 }
 
 // ── 5. Metas de ahorro ──
+
+// SRP:
+// Esta funcion solo carga y muestra las metas de ahorro.
+
 async function loadGoals() {
   const goals     = await fetchAPI('/goals', MOCK.goals);
   const container = document.getElementById('savingGoals');
@@ -304,6 +351,9 @@ async function loadGoals() {
 // ============================================
 // INICIALIZACIÓN
 // ============================================
+
+// SRP:
+// Esta funcion inicializa todas las partes del dashboard.
 
 async function init() {
   await Promise.all([

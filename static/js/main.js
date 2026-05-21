@@ -1,5 +1,9 @@
 
-// ── Datos del mini gráfico de barras ──────
+// SRP:
+// Este archivo se encarga de las interacciones de la pagina inicial, entonces
+// el HTML nos muestra la estructura visual y aqui manejamos eventos, botones y animaciones.
+
+// Datos del mini grafico de barras.
 const chartData = [
   { income: 35, expense: 28 },
   { income: 42, expense: 30 },
@@ -9,10 +13,9 @@ const chartData = [
   { income: 45, expense: 32 },
 ];
 
-/**
- * Renderiza las barras del mini gráfico
- * dentro de #mini-chart
- */
+// SRP:
+// Esta funcion solo se encarga de renderizar las barras del mini grafico.
+// dentro de #mini-chart
 function renderMiniChart() {
   const container = document.getElementById('mini-chart');
   if (!container) return;
@@ -26,11 +29,14 @@ function renderMiniChart() {
     `)
     .join('');
 }
-
+// SRP:
+// Esta funcion solo se encarga de redirigir desde el boton principal.
 function handleStart() {
     window.location.href = "/registro";
 }
 
+// SRP:
+// Esta funcion solo se encarga de redirigir desde el boton de ingresar.
 function handleLogin() {
     window.location.href = "/registro";
 }
@@ -47,6 +53,8 @@ function initPillHovers() {
 }
 
 // ── Inicialización ────────────────────────
+// SRP:
+// Aqui se inicializan las funciones cuando la pagina ya termino de cargar.
 document.addEventListener('DOMContentLoaded', () => {
   renderMiniChart();
   initPillHovers();

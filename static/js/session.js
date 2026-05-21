@@ -1,6 +1,9 @@
 /* ============================================
    SESIÓN
 ============================================ */
+// SRP:
+// Este archivo se encarga solo de manejar la sesion del usuario.
+// Guarda, obtiene y elimina los datos de sesion usando localStorage.
 
 const Session = {
 
@@ -16,12 +19,12 @@ const Session = {
         localStorage.setItem("correo", correo);
     },
 
-cerrar() {
-    localStorage.removeItem("usuario");
-    localStorage.removeItem("correo");
+    cerrar() {
+        localStorage.removeItem("usuario");
+        localStorage.removeItem("correo");
 
-    window.location.href = "/";
-}
+        window.location.href = "/";
+    }
 
 };
 
@@ -29,19 +32,28 @@ cerrar() {
 /* ============================================
    CARGAR USUARIO EN DASHBOARD
 ============================================ */
+// SRP:
+// Esta parte solo carga los datos guardados del usuario en el dashboard.
 
 document.addEventListener("DOMContentLoaded", () => {
 
     const datos = Session.obtener();
 
-    document.getElementById("userName").textContent =
-        datos.usuario || "Usuario";
+    const userName = document.getElementById("userName");
+    const userFullName = document.getElementById("userFullName");
+    const userEmail = document.getElementById("userEmail");
 
-    document.getElementById("userFullName").textContent =
-        datos.usuario || "Usuario";
+    if (userName) {
+        userName.textContent = datos.usuario || "Usuario";
+    }
 
-    document.getElementById("userEmail").textContent =
-        datos.correo || "correo@gmail.com";
+    if (userFullName) {
+        userFullName.textContent = datos.usuario || "Usuario";
+    }
+
+    if (userEmail) {
+        userEmail.textContent = datos.correo || "correo@gmail.com";
+    }
 
 });
 
@@ -49,6 +61,8 @@ document.addEventListener("DOMContentLoaded", () => {
 /* ============================================
    CERRAR SESIÓN
 ============================================ */
+// SRP:
+// Esta funcion solo se encarga de cerrar la sesion cuando el usuario presiona el boton.
 
 function cerrarSesion() {
     Session.cerrar();

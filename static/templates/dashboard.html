@@ -331,49 +331,6 @@
 </div>
  
 <!-- Nuestro script -->
-<script>
-/* ============================================
-   SESIÓN
-============================================ */
-
-const Session = {
-
-    obtener() {
-        return {
-            usuario: localStorage.getItem("usuario"),
-            correo: localStorage.getItem("correo")
-        };
-    },
-
-    cerrar() {
-        localStorage.removeItem("usuario");
-        localStorage.removeItem("correo");
-    }
-
-};
-
-
-/* ============================================
-   CARGAR DATOS DEL USUARIO
-============================================ */
-
-document.addEventListener("DOMContentLoaded", () => {
-
-    const datos = Session.obtener();
-
-    document.getElementById("userName")?.textContent =
-        datos.usuario || "Usuario";
-
-    document.getElementById("userFullName")?.textContent =
-        datos.usuario || "Usuario";
-
-    document.getElementById("userEmail")?.textContent =
-        datos.correo || "correo@gmail.com";
-
-});
-
-
-</script>
 <script src="/static/js/session.js"></script>
 <script src="/static/js/conexion.js"></script>
 </body>

@@ -34,7 +34,8 @@
         <a href="#conocenos">Conócenos</a>
       </div>
 
-      <button class="nav-cta" onclick="window.location.href='/registro'">
+<!-- SRP: El HTML solo muestra el botón, la acción se maneja desde main.js. -->
+      <button class="nav-cta" id="btn-login">
     Ingresar
 </button>
     </nav>
@@ -50,11 +51,12 @@
 
       <p>
         VEMAX es el lugar seguro para mantener el control de tu dinero,
-        añade ingresos, gatos y metas para poder hacerlas realidad.
+        añade ingresos, gastos y metas para poder hacerlas realidad.
       </p>
 
       <div class="hero-actions">
-        <button class="btn-primary" id="btn-start" onclick="handleStart()">
+        <!-- SRP: El HTML mantiene la estructura visual y ya el evento del botón se maneja desde main.js. -->
+        <button class="btn-primary" id="btn-start">
           Comienza ahora
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">

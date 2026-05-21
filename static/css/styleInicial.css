@@ -1,4 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap');
+
+/* SRP:
+   Este archivo se encarga solo de los estilos de la pagina inicial.
+   paginainicial.html mantiene la estructura y main.js maneja las interacciones. */
+
 /* ─────────────────────────────────────────
    Colores principales:
      --blue-brand : #62afe6   (azul claro principal)
