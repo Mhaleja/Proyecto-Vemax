@@ -15,42 +15,6 @@
 const API_BASE = window.location.origin + '/api';
 
 // ============================================
-// TEMA — Modo claro / oscuro
-// ============================================
-
-// SRP:
-// Esta funcion solo se encarga de cambiar el tema claro u oscuro.
-
-function setTheme(mode) {
-  if (mode === 'dark') {
-    document.documentElement.classList.add('dark');
-  } else {
-    document.documentElement.classList.remove('dark');
-  }
-  localStorage.setItem('theme', mode);
-  // Recarga los gráficos para que usen los colores correctos
-  loadMoneyFlow();
-  loadBudget();
-}
-
-// Aplica el tema guardado al cargar
-const savedTheme = localStorage.getItem('theme') || 'light';
-setTheme(savedTheme);
-
-// Conecta los botones del sidebar
-document.addEventListener('DOMContentLoaded', () => {
-  document.querySelector('[data-theme="light"]')
-    ?.addEventListener('click', () => setTheme('light'));
-  document.querySelector('[data-theme="dark"]')
-    ?.addEventListener('click', () => setTheme('dark'));
-});
-
-// Lee el valor actual de una variable CSS
-function cssVar(name) {
-  return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
-}
-
-// ============================================
 // UTILIDADES
 // ============================================
 
@@ -146,16 +110,19 @@ const MOCK = {
 // Esta funcion solo carga y muestra las tarjetas principales del resumen.
 
 async function loadSummary() {
-  const d = await fetchAPI('/summary', MOCK.summary);
-// Limpiar usuario viejo guardado
+  console.log('Cargando resumen desde movimientos');
+  const movimientos = obtenerMovimientos();
+  const d = calcularResumenFinanciero(movimientos);
+
   document.getElementById('totalBalance').textContent = formatNum(d.balance);
   document.getElementById('totalIncome').textContent  = formatNum(d.income);
   document.getElementById('totalExpense').textContent = formatNum(d.expense);
   document.getElementById('totalSavings').textContent = formatNum(d.savings);
-  setBadge('balanceBadge', d.balance_change);
-  setBadge('incomeBadge',  d.income_change);
-  setBadge('expenseBadge', d.expense_change, true);
-  setBadge('savingsBadge', d.savings_change);
+
+  setBadge('balanceBadge', 0);
+  setBadge('incomeBadge',  0);
+  setBadge('expenseBadge', 0, true);
+  setBadge('savingsBadge', 0);
 }
 
 // SRP:
@@ -176,7 +143,7 @@ let moneyChart;
 // Esta funcion solo carga y renderiza el grafico semanal de ingresos y gastos.
 
 async function loadMoneyFlow() {
-  const d   = await fetchAPI('/money-flow', MOCK.moneyFlow);
+  const d = calcularFlujoSemanal(obtenerMovimientos());
   const ctx = document.getElementById('moneyFlowChart').getContext('2d');
   const isDark = document.documentElement.classList.contains('dark');
 
@@ -241,11 +208,16 @@ async function loadMoneyFlow() {
 let budgetChart;
 
 async function loadBudget() {
-  const d = await fetchAPI('/budget', MOCK.budget);
-  document.getElementById('budgetTotal').textContent = '$' + formatNum(d.total);
+  const d = calcularPresupuestoPorCategoria(obtenerMovimientos());
 
   const ctx = document.getElementById('budgetChart').getContext('2d');
   if (budgetChart) budgetChart.destroy();
+  if (d.categories.length === 0) {
+    d.categories = [
+      { name: 'Sin gastos', amount: 1, color: '#d6eaf8', pct: 100 }
+    ];
+  }
+  document.getElementById('budgetTotal').textContent = '$' + formatNum(d.total);
 
   budgetChart = new Chart(ctx, {
     type: 'doughnut',
@@ -292,32 +264,37 @@ const CATEGORY_ICONS = {
 // Esta funcion solo carga y muestra la tabla de transacciones.
 
 async function loadTransactions() {
-  const list  = await fetchAPI('/transactions', MOCK.transactions);
+  const list = obtenerMovimientos()
+    .slice()
+    .sort((a, b) => new Date(b.fecha) - new Date(a.fecha))
+    .slice(0, 5);
+
   const tbody = document.getElementById('transactionsBody');
 
   tbody.innerHTML = list.map(t => {
-    const isPos = t.amount >= 0;
+    const amount = t.tipo === 'ingreso' ? Number(t.monto) : -Number(t.monto);
+    const isPos = amount >= 0;
     const color = isPos ? 'var(--green)' : 'var(--red)';
-    const sign  = isPos ? '+' : '';
-    const icon  = CATEGORY_ICONS[t.category] || '💸';
+    const sign = isPos ? '+' : '-';
+    const icon = CATEGORY_ICONS[t.categoria] || '💸';
 
     return `
       <tr class="border-t hover:bg-gray-50 transition-colors" style="border-color:var(--border)">
-        <td class="py-3 text-xs" style="color:var(--muted)">${t.date}</td>
+        <td class="py-3 text-xs" style="color:var(--muted)">${t.fecha}</td>
         <td class="py-3 text-sm font-semibold" style="color:${color}">
-          ${sign}$${Math.abs(t.amount)}
+          ${sign}$${formatNum(Math.abs(amount))}
         </td>
         <td class="py-3">
           <div class="flex items-center gap-2">
             <span class="text-lg leading-none">${icon}</span>
-            <span class="text-sm font-medium" style="color:var(--text)">${t.name}</span>
+            <span class="text-sm font-medium" style="color:var(--text)">${t.concepto}</span>
           </div>
         </td>
-        <td class="py-3 text-xs hidden md:table-cell" style="color:var(--muted)">${t.method}</td>
+        <td class="py-3 text-xs hidden md:table-cell" style="color:var(--muted)">${t.metodo}</td>
         <td class="py-3 hidden md:table-cell">
           <span class="text-xs px-2 py-1 rounded-lg font-medium"
                 style="background:var(--primary-light);color:var(--primary)">
-            ${t.category}
+            ${t.categoria}
           </span>
         </td>
       </tr>
@@ -365,5 +342,13 @@ async function init() {
   ]);
 }
 
-init();
-setInterval(init, 60_000); //tiempo de transiciones 60 segundos 
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelector('[data-theme="light"]')
+    ?.addEventListener('click', () => setTheme('light'));
+
+  document.querySelector('[data-theme="dark"]')
+    ?.addEventListener('click', () => setTheme('dark'));
+
+  init();
+  setInterval(init, 60_000);
+});

@@ -1,0 +1,68 @@
+<aside id="sidebar" class="w-20 lg:w-56 bg-white flex flex-col py-6 px-3 gap-1 shadow-sm transition-all duration-300 z-10">
+
+  <!-- Logo -->
+  <div class="flex items-center gap-3 mb-6 px-1">
+    <div class="w-10 h-10 rounded-xl flex items-center justify-center" style="background:var(--primary)">
+      <img src="/static/img/VEMAX.png" class="w-10 h-10 rounded-lg">
+    </div>
+    <span class="hidden lg:block font-bold text-lg" style="color:var(--text)">VEMAX</span>
+  </div>
+
+  <!-- Navegación principal -->
+  <nav class="flex flex-col gap-1 flex-1">
+
+    <a href="/dashboard"
+       class="sidebar-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium {% if paginaActiva == 'dashboard' %}active{% endif %}"
+       style="color:var(--muted)">
+      <span class="material-symbols-rounded">location_home</span>
+      <span class="hidden lg:block">Dashboard</span>
+    </a>
+
+    <a href="/movimientos"
+       class="sidebar-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium {% if paginaActiva == 'movimientos' %}active{% endif %}"
+       style="color:var(--muted)">
+      <span class="material-symbols-rounded">payments</span>
+      <span class="hidden lg:block">Movimientos</span>
+    </a>
+
+    <a href="/configuracion"
+       class="sidebar-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium {% if paginaActiva == 'configuracion' %}active{% endif %}"
+       style="color:var(--muted)">
+      <span class="material-symbols-rounded">settings_heart</span>
+      <span class="hidden lg:block">Configuración</span>
+    </a>
+
+  </nav>
+
+  <!-- Parte inferior del sidebar -->
+  <div class="flex flex-col gap-1 border-t pt-4" style="border-color:#dff0fb">
+
+    <a href="#" onclick="cerrarSesion()" class="sidebar-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium" style="color:var(--muted)">
+      <span class="material-symbols-rounded">exit_to_app</span>
+      <span class="hidden lg:block">Cerrar Sesión</span>
+    </a>
+
+    <!-- Toggle de tema -->
+    <div class="flex items-center gap-2 px-3 py-2 mt-2">
+      <button data-theme="light" class="w-8 h-8 rounded-full flex items-center justify-center" style="background:var(--primary-light)">
+        <svg width="15" height="15" fill="none" stroke="var(--primary)" stroke-width="2" viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="5"/>
+          <line x1="12" y1="1" x2="12" y2="3"/>
+          <line x1="12" y1="21" x2="12" y2="23"/>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+          <line x1="1" y1="12" x2="3" y2="12"/>
+          <line x1="21" y1="12" x2="23" y2="12"/>
+          <line x1="4.22" y1="19.78" x2="19.78" y2="4.22"/>
+        </svg>
+      </button>
+      
+      <button data-theme="dark" class="w-8 h-8 rounded-full items-center justify-center hidden lg:flex" style="background:var(--accent-solid)">
+    <svg width="15" height="15" fill="none" stroke="#ffffff" stroke-width="2" viewBox="0 0 24 24">
+      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+    </svg>
+  </button>
+</div>
+
+</div>
+</aside>

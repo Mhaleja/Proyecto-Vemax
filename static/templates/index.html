@@ -22,18 +22,20 @@
 
             <div class="form" id="form">
 
+                <div class="form" id="form">
+
                 <form class="inicio">
                     <h2>Bienvenido de nuevo</h2>
                     <p>¡Hola! Es momento de organizar las nueces del día. ¡Entra y revisa tu saldo!</p>
 
                     <div class="input">
                         <label>Correo Electrónico</label>
-                        <input type="email" id="correoLogin" placeholder="Ingresa tu correo electrónico">
+                        <input type="email" id="correoLogin" placeholder="Ingresa tu correo electrónico" required>
                     </div>
 
                     <div class="input">
                         <label>Contraseña</label>
-                        <input type="password" id="passwordLogin" placeholder="Ingresa tu contraseña">
+                        <input type="password" id="passwordLogin" placeholder="Ingresa tu contraseña" required minlength="6">
                     </div>
 
                     <div class="recordatorio">
@@ -62,17 +64,17 @@
 
                     <div class="input">
                         <label>Usuario</label>
-                        <input type="text" id="usuario" placeholder="Ingresa tu usuario">
+                        <input type="text" id="usuario" placeholder="Ingresa tu usuario" required minlength="3">
                     </div>
 
                     <div class="input">
                         <label>Correo Electrónico</label>
-                        <input type="email" id="correo" placeholder="Ingresa tu correo electrónico">
+                        <input type="email" id="correo" placeholder="Ingresa tu correo electrónico" required>
                     </div>
 
                     <div class="input">
                         <label>Contraseña</label>
-                        <input type="password" id="password" placeholder="Ingresa tu contraseña">
+                        <input type="password" id="password" placeholder="Ingresa tu contraseña" required minlength="6">
                     </div>
 
                     <div class="botones">
@@ -103,7 +105,7 @@
     </div>
 
     <!-- SRP: La lógica de autenticación se separa del HTML y queda en auth.js. -->
-    <script src="/static/js/auth.js"></script>
+    <script src="/static/js/auth.js?v=3"></script>
 
     <!-- SRP: Las animaciones quedan separadas en su propio archivo. -->
     <script src="/static/js/animaciones.js"></script>

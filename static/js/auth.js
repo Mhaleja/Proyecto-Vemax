@@ -2,51 +2,113 @@
 // Este archivo se encarga solo de la lógica de registro e inicio de sesión.
 // Así el HTML queda encargado únicamente de mostrar la estructura de la página.
 
-function registrar() {
-    const usuario = document.getElementById("usuario").value.trim();
-    const correo = document.getElementById("correo").value.trim();
-    const password = document.getElementById("password").value.trim();
+function obtenerValor(id) {
+    return document.getElementById(id).value.trim();
+}
 
-    if (!usuario || !correo || !password) {
-        alert("Completa todos los campos");
-        return;
-    }
+function validarUsuario(usuario) {
+    return /^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]{3,40}$/.test(usuario);
+}
 
-    // SRP:
-    // Aquí validamos si el correo ya existe antes de guardar el usuario.
-    const correoGuardado = localStorage.getItem("correo");
+function validarCorreo(correo) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(correo);
+}
 
-    if (correo === correoGuardado) {
-        alert("Ese correo ya está registrado");
-        return;
-    }
+function validarPassword(password) {
+    const tieneMinimo = password.length >= 8;
+    const tieneMayuscula = /[A-ZÁÉÍÓÚÑ]/.test(password);
+    const tieneMinuscula = /[a-záéíóúñ]/.test(password);
+    const tieneNumero = /\d/.test(password);
+    const tieneSimbolo = /[^A-Za-zÁÉÍÓÚáéíóúÑñ0-9]/.test(password);
 
-    // Por ahora usamos localStorage como almacenamiento temporal del frontend.
-    localStorage.setItem("usuario", usuario);
-    localStorage.setItem("correo", correo);
-    localStorage.setItem("password", password);
+    return tieneMinimo && tieneMayuscula && tieneMinuscula && tieneNumero && tieneSimbolo;
+}
 
-    alert("Usuario registrado correctamente");
+function mostrarMensaje(mensaje) {
+    alert(mensaje);
+}
 
+function limpiarRegistro() {
     document.getElementById("usuario").value = "";
     document.getElementById("correo").value = "";
     document.getElementById("password").value = "";
 }
 
+function validarDatosRegistro(usuario, correo, password) {
+    if (!usuario || !correo || !password) {
+        return "Completa todos los campos";
+    }
+
+    if (!validarUsuario(usuario)) {
+        return "El usuario debe tener solo letras y espacios, entre 3 y 40 caracteres";
+    }
+
+    if (!validarCorreo(correo)) {
+        return "Ingresa un correo electrónico válido. Ejemplo: usuario@correo.com";
+    }
+
+    if (!validarPassword(password)) {
+        return "La contraseña debe tener mínimo 8 caracteres, una mayúscula, una minúscula, un número y un símbolo";
+    }
+
+    return null;
+}
+
+function validarDatosLogin(correo, password) {
+    if (!correo || !password) {
+        return "Completa todos los campos";
+    }
+
+    if (!validarCorreo(correo)) {
+        return "Ingresa un correo electrónico válido";
+    }
+
+    return null;
+}
+
+function registrar() {
+    const usuario = obtenerValor("usuario");
+    const correo = obtenerValor("correo");
+    const password = obtenerValor("password");
+
+    const error = validarDatosRegistro(usuario, correo, password);
+
+    if (error) {
+        mostrarMensaje(error);
+        return;
+    }
+
+    const correoGuardado = localStorage.getItem("correo");
+
+    if (correo === correoGuardado) {
+        mostrarMensaje("Ese correo ya está registrado");
+        return;
+    }
+
+    localStorage.setItem("usuario", usuario);
+    localStorage.setItem("correo", correo);
+    localStorage.setItem("password", password);
+
+    mostrarMensaje("Usuario registrado correctamente");
+    limpiarRegistro();
+}
+
 function login() {
-    const correo = document.getElementById("correoLogin").value.trim();
-    const password = document.getElementById("passwordLogin").value.trim();
+    const correo = obtenerValor("correoLogin");
+    const password = obtenerValor("passwordLogin");
+
+    const error = validarDatosLogin(correo, password);
+
+    if (error) {
+        mostrarMensaje(error);
+        return;
+    }
 
     const correoGuardado = localStorage.getItem("correo");
     const passwordGuardado = localStorage.getItem("password");
 
-    if (!correo || !password) {
-        alert("Completa todos los campos");
-        return;
-    }
-
     if (correo !== correoGuardado || password !== passwordGuardado) {
-        alert("Correo o contraseña incorrectos");
+        mostrarMensaje("Correo o contraseña incorrectos");
         return;
     }
 
