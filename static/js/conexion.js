@@ -111,7 +111,7 @@ const MOCK = {
 
 async function loadSummary() {
   console.log('Cargando resumen desde movimientos');
-  const movimientos = obtenerMovimientos();
+  const movimientos = await obtenerMovimientos();
   const d = calcularResumenFinanciero(movimientos);
 
   document.getElementById('totalBalance').textContent = formatNum(d.balance);
@@ -143,7 +143,8 @@ let moneyChart;
 // Esta funcion solo carga y renderiza el grafico semanal de ingresos y gastos.
 
 async function loadMoneyFlow() {
-  const d = calcularFlujoSemanal(obtenerMovimientos());
+  const movimientos = await obtenerMovimientos();
+  const d = calcularFlujoSemanal(movimientos);
   const ctx = document.getElementById('moneyFlowChart').getContext('2d');
   const isDark = document.documentElement.classList.contains('dark');
 
@@ -208,7 +209,8 @@ async function loadMoneyFlow() {
 let budgetChart;
 
 async function loadBudget() {
-  const d = calcularPresupuestoPorCategoria(obtenerMovimientos());
+  const movimientos = await obtenerMovimientos();
+  const d = calcularPresupuestoPorCategoria(movimientos);
 
   const ctx = document.getElementById('budgetChart').getContext('2d');
   if (budgetChart) budgetChart.destroy();
@@ -264,7 +266,9 @@ const CATEGORY_ICONS = {
 // Esta funcion solo carga y muestra la tabla de transacciones.
 
 async function loadTransactions() {
-  const list = obtenerMovimientos()
+  const movimientos = await obtenerMovimientos();
+
+  const list = movimientos
     .slice()
     .sort((a, b) => new Date(b.fecha) - new Date(a.fecha))
     .slice(0, 5);

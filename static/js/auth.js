@@ -78,19 +78,31 @@ function registrar() {
         return;
     }
 
-    const correoGuardado = localStorage.getItem("correo");
+    fetch("/auth/registro", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            usuario: usuario,
+            correo: correo,
+            password: password
+        })
+    })
 
-    if (correo === correoGuardado) {
-        mostrarMensaje("Ese correo ya está registrado");
-        return;
-    }
+    .then(response => response.json())
+    .then(data => {
+        mostrarMensaje(data.mensaje);
 
-    localStorage.setItem("usuario", usuario);
-    localStorage.setItem("correo", correo);
-    localStorage.setItem("password", password);
+        if (data.correo) {
+            Session.guardar(data.usuario, data.correo);
+            limpiarRegistro();
+        }
+    })
 
-    mostrarMensaje("Usuario registrado correctamente");
-    limpiarRegistro();
+    .catch(() => {
+        mostrarMensaje("Error al registrar usuario");
+    });
 }
 
 function login() {
@@ -104,13 +116,26 @@ function login() {
         return;
     }
 
-    const correoGuardado = localStorage.getItem("correo");
-    const passwordGuardado = localStorage.getItem("password");
+    fetch("/auth/login", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            correo: correo,
+            password: password
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        mostrarMensaje(data.mensaje);
 
-    if (correo !== correoGuardado || password !== passwordGuardado) {
-        mostrarMensaje("Correo o contraseña incorrectos");
-        return;
-    }
-
-    window.location.href = "/dashboard";
+        if (data.correo) {
+            Session.guardar(data.usuario, data.correo);
+            window.location.href = "/dashboard";
+        }
+    })
+    .catch(() => {
+        mostrarMensaje("Error al iniciar sesión");
+    });
 }

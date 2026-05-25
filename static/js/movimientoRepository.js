@@ -1,36 +1,51 @@
-const MOVIMIENTOS_KEY = 'vemax_movimientos';
+async function obtenerMovimientos() {
+  const sesion = Session.obtener();
 
-const movimientosIniciales = [
-  { id:1, tipo:'ingreso', concepto:'Beca universitaria', monto:800000, categoria:'Estudios', metodo:'Transferencia', fecha:'2025-05-01', nota:'' },
-  { id:2, tipo:'egreso', concepto:'Almuerzo cafetería', monto:8500, categoria:'Alimentación', metodo:'Efectivo', fecha:'2025-05-03', nota:'Menú del día' },
-  { id:3, tipo:'egreso', concepto:'Bus ida y vuelta', monto:4200, categoria:'Transporte', metodo:'Efectivo', fecha:'2025-05-04', nota:'' },
-  { id:4, tipo:'ingreso', concepto:'Trabajo freelance', monto:350000, categoria:'Trabajo', metodo:'Transferencia', fecha:'2025-05-10', nota:'Proyecto web' },
-  { id:5, tipo:'egreso', concepto:'Libros semestre', monto:95000, categoria:'Estudios', metodo:'Tarjeta', fecha:'2025-05-12', nota:'' },
-];
-
-function obtenerMovimientos() {
-  const guardados = localStorage.getItem(MOVIMIENTOS_KEY);
-
-  if (!guardados) {
-    guardarMovimientos(movimientosIniciales);
-    return movimientosIniciales;
+  if (!sesion.correo) {
+    return [];
   }
 
-  return JSON.parse(guardados);
+  const response = await fetch(`/movimientos/?correo=${encodeURIComponent(sesion.correo)}`);
+  const data = await response.json();
+
+  return data.movimientos || [];
 }
 
-function guardarMovimientos(movimientos) {
-  localStorage.setItem(MOVIMIENTOS_KEY, JSON.stringify(movimientos));
+async function agregarMovimiento(movimiento) {
+  const sesion = Session.obtener();
+
+  if (!sesion.correo) {
+    alert("Debes iniciar sesión");
+    return null;
+  }
+
+  const response = await fetch("/movimientos/", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      correo: sesion.correo,
+      tipo: movimiento.tipo,
+      concepto: movimiento.concepto,
+      monto: movimiento.monto,
+      categoria: movimiento.categoria,
+      metodo: movimiento.metodo,
+      fecha: movimiento.fecha,
+      nota: movimiento.nota || ""
+    })
+  });
+
+  const data = await response.json();
+
+  return data.movimiento || null;
 }
 
-function agregarMovimiento(movimiento) {
-  const movimientos = obtenerMovimientos();
-  movimientos.unshift(movimiento);
-  guardarMovimientos(movimientos);
-  return movimiento;
+function guardarMovimientos() {
+  // Ya no se usa localStorage. Los movimientos se guardan en la base de datos.
 }
 
 function eliminarMovimiento(id) {
-  const movimientos = obtenerMovimientos().filter(m => m.id !== id);
-  guardarMovimientos(movimientos);
+  // Lo conectamos a la base de datos después.
+  console.log("Eliminar movimiento pendiente:", id);
 }

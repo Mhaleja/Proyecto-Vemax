@@ -4,18 +4,19 @@
    ============================================ */
 
 /* ── ESTADO ─────────────────────────────────────────────────── */
-
-let movimientos = obtenerMovimientos();
+let movimientos = [];
 
 let filtroActivo = 'todos';
 let tipoModal    = 'ingreso';
 
 /* ── INIT ───────────────────────────────────────────────────── */
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
   document.getElementById('inputFecha').value = hoy();
   document.getElementById('inputMonto').addEventListener('input', maskMonto);
   document.getElementById('inputMonto').addEventListener('keydown', soloNumeros);
+
+  movimientos = await obtenerMovimientos();
   renderizar();
 });
 
@@ -156,7 +157,7 @@ function limpiarModal() {
 
 /* ── GUARDAR ────────────────────────────────────────────────── */
 
-function guardarMovimiento() {
+async function guardarMovimiento() {
   const montoRaw = document.getElementById('inputMonto').value.replace(/\./g,'');
   const monto    = parseFloat(montoRaw);
   const concepto = document.getElementById('inputConcepto').value.trim();
@@ -177,8 +178,14 @@ function guardarMovimiento() {
     nota:      document.getElementById('inputNota').value.trim(),
   };
 
-  agregarMovimiento(nuevo);
-  movimientos = obtenerMovimientos();
+  const movimientoGuardado = await agregarMovimiento(nuevo);
+
+  if (!movimientoGuardado) {
+    showToast('No se pudo guardar el movimiento');
+    return;
+  }
+
+  movimientos = await obtenerMovimientos();
 
   cerrarModal();
   filtrar(filtroActivo);
@@ -187,9 +194,9 @@ function guardarMovimiento() {
 
 /* ── ELIMINAR ───────────────────────────────────────────────── */
 
-function eliminar(id) {
+async function eliminar(id) {
   eliminarMovimiento(id);
-  movimientos = obtenerMovimientos();
+  movimientos = await obtenerMovimientos();
   /* await eliminarMovimientoAPI(id); */
   filtrar(filtroActivo);
   showToast('Movimiento eliminado');
