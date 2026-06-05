@@ -89,19 +89,25 @@ function registrar() {
             password: password
         })
     })
-
     .then(response => response.json())
     .then(data => {
+        console.log("RESPUESTA:", data);
+
         mostrarMensaje(data.mensaje);
 
         if (data.correo) {
-            Session.guardar(data.usuario, data.correo);
             limpiarRegistro();
+
+            const Form = document.getElementById("form");
+            const Banner = document.getElementById("banner");
+
+            Form.classList.remove("toggle");
+            Banner.classList.remove("toggle");
         }
     })
-
-    .catch(() => {
-        mostrarMensaje("Error al registrar usuario");
+    .catch(err => {
+        console.error(err);
+        mostrarMensaje("Error en registro");
     });
 }
 

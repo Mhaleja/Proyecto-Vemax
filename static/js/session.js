@@ -67,3 +67,25 @@ document.addEventListener("DOMContentLoaded", () => {
 function cerrarSesion() {
     Session.cerrar();
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    const correoLogin = document.getElementById("correoLogin");
+    const passwordLogin = document.getElementById("passwordLogin");
+
+    if (correoLogin) {
+        correoLogin.value = "";
+    }
+
+    if (passwordLogin) {
+        passwordLogin.value = "";
+    }
+
+    const usuario = document.getElementById("usuario");
+    const correo = document.getElementById("correo");
+    const password = document.getElementById("password");
+
+    if (usuario) usuario.value = "";
+    if (correo) correo.value = "";
+    if (password) password.value = "";
+});

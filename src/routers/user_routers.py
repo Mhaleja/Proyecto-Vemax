@@ -36,8 +36,8 @@ def registrar(
     datos: RegistroModel,
     controller: UserController = Depends(obtener_controlador)
 ):
+#para tomar la respuesta del contr y enviar al fron
     return controller.registrar_usuario(datos)
-
 
 @router.post("/login")
 def login(
@@ -45,4 +45,3 @@ def login(
     controller: UserController = Depends(obtener_controlador)
 ):
     return controller.login_usuario(datos)
-

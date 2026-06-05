@@ -35,7 +35,8 @@ class AuthService:
         return {
             "mensaje": "Usuario registrado con exito",
             "usuario": datos.usuario,
-            "correo": datos.correo
+            "correo": datos.correo,
+            "redirect": "/login"
         }
 
     # SRP:
@@ -59,4 +60,5 @@ class AuthService:
             "mensaje": "Bienvenido",
             "usuario": usuario.usuario,
             "correo": usuario.correo
+            
         }
