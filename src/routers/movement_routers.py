@@ -37,3 +37,11 @@ def listar_movimientos(
     controller: MovementController = Depends(obtener_controlador)
 ):
     return controller.listar_movimientos(correo)
+
+#acá se crea para pasarle el id a controller y oculta el movimiento 
+@router.put("/ocultar/{movimiento_id}")
+def ocultar_movimiento(
+    movimiento_id: int,
+    controller: MovementController = Depends(obtener_controlador)
+):
+    return controller.ocultar_movimiento(movimiento_id)

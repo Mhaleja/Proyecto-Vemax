@@ -40,6 +40,16 @@ class MovementService:
             }
         }
 
+
+    #acá envia a ocultar el mov y devuleve un mensaje de confi
+
+    def ocultar_movimiento(self, movimiento_id):
+        self.movement_repository.ocultar(movimiento_id)
+
+        return {
+            "mensaje": "Movimiento ocultado"
+    }
+    #
     def listar_movimientos(self, correo):
         usuario = self.user_repository.buscar_por_correo(correo)
 

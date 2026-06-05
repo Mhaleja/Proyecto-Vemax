@@ -45,3 +45,4 @@ def login(
     controller: UserController = Depends(obtener_controlador)
 ):
     return controller.login_usuario(datos)
+

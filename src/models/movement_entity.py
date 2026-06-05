@@ -1,5 +1,7 @@
 from sqlalchemy import Float, ForeignKey, Integer, String
 from sqlalchemy.orm import Mapped, mapped_column
+#librería que  nos permite trabajar con bases de datos sin escribir SQL directamente todo el tiempo
+from sqlalchemy import Boolean
 
 from src.database.base import Base
 
@@ -22,3 +24,9 @@ class MovementEntity(Base):
     metodo: Mapped[str] = mapped_column(String(50), nullable=False)
     fecha: Mapped[str] = mapped_column(String(20), nullable=False)
     nota: Mapped[str] = mapped_column(String(255), nullable=True)
+
+    #para el borrador logico, se crea cada registro como True
+    activo: Mapped[bool] = mapped_column(
+        Boolean,
+        default=True
+    )

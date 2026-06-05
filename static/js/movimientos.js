@@ -9,14 +9,25 @@ let movimientos = [];
 let filtroActivo = 'todos';
 let tipoModal    = 'ingreso';
 
-/* ── INIT ───────────────────────────────────────────────────── */
 
-document.addEventListener('DOMContentLoaded', async () => {
+  document.addEventListener('DOMContentLoaded', async () => {
   document.getElementById('inputFecha').value = hoy();
   document.getElementById('inputMonto').addEventListener('input', maskMonto);
   document.getElementById('inputMonto').addEventListener('keydown', soloNumeros);
 
   movimientos = await obtenerMovimientos();
+  /*--------
+  Acá obtenemos del localStorage los IDs de movimientos ocultos
+  Si no existe nada guardado ahí, usa un arreglo vacío 
+  también se iltra la lista de movimientos eliminando aquellos, los IDs están en el arreglo de ocultos */
+
+  const ocultos = JSON.parse(
+    localStorage.getItem("movimientosOcultos") || "[]"
+  );
+  movimientos = movimientos.filter(
+  m => !ocultos.includes(m.id)
+  );
+
   renderizar();
 });
 
@@ -185,21 +196,23 @@ async function guardarMovimiento() {
     return;
   }
 
-  movimientos = await obtenerMovimientos();
+
+movimientos = await obtenerMovimientos();
 
   cerrarModal();
   filtrar(filtroActivo);
   showToast(`${tipoModal === 'ingreso' ? 'Ingreso' : 'Egreso'} guardado ✓`);
 }
 
-/* ── ELIMINAR ───────────────────────────────────────────────── */
-
+/* ── ELIMINAR ───────────────────────────────────────────────── 
+para ocultar el movimiento en el backend y actualiza la lista de movimientos */
 async function eliminar(id) {
-  eliminarMovimiento(id);
+  await fetch(`/movimientos/ocultar/${id}`, {
+    method: "PUT"
+  });
   movimientos = await obtenerMovimientos();
-  /* await eliminarMovimientoAPI(id); */
   filtrar(filtroActivo);
-  showToast('Movimiento eliminado');
+  showToast("Movimiento ocultado");
 }
 
 /* ── MÁSCARA DE MONTO ───────────────────────────────────────── */
