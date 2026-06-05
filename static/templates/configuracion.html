@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="shortcut icon" href="/static/img/configuracion.png">
+  <title>Configuración</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+  <link rel="stylesheet" href="/static/css/interfazConf.css"/>
+</head>
+<body class="min-h-screen py-8 px-4">
+
+<div class="w-full max-w-lg mx-auto">
+
+  <!-- ── Topbar ── -->
+  <div class="flex items-center justify-between mb-6">
+    <a id="btn-back" href="/dashboard"
+    
+       style="color:var(--primary);text-decoration:none"
+       class="flex items-center gap-2 text-sm font-semibold hover:opacity-70 transition-opacity">
+      <span class="material-symbols-rounded" style="font-size:20px">arrow_back</span>
+      Volver al dashboard
+    </a>
+    <div class="flex items-center gap-2">
+      <button id="btn-theme-light"
+              class="w-8 h-8 rounded-xl flex items-center justify-center"
+              style="background:var(--primary-light)">
+        <span class="material-symbols-rounded" style="font-size:16px;color:var(--primary)">light_mode</span>
+      </button>
+      <button id="btn-theme-dark"
+              class="w-8 h-8 rounded-xl flex items-center justify-center"
+              style="background:var(--accent-solid)">
+        <span class="material-symbols-rounded" style="font-size:16px;color:white">dark_mode</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ── Card principal ── -->
+  <div class="cfg-card overflow-hidden">
+
+    <!-- Header -->
+    <div class="flex items-center gap-3 px-5 py-5"
+         style="border-bottom:1.5px solid var(--border)">
+      <div class="cfg-icon">
+        <span class="material-symbols-rounded" style="font-size:20px;color:var(--primary)">settings_heart</span>
+      </div>
+      <div>
+        <h1 class="text-lg font-bold" style="color:var(--text)">Configuración</h1>
+        <p class="text-xs" style="color:var(--muted)">Protege tu madriguera.</p>
+      </div>
+    </div>
+
+    <!--Parte 1 — CAMBIAR CONTRASEÑA -->
+    <div class="cfg-section">
+      <div id="header-password" class="cfg-section-header">
+        <div class="cfg-section-title">
+          <div class="cfg-icon">
+            <span class="material-symbols-rounded" style="font-size:18px;color:var(--primary)">password</span>
+          </div>
+          Cambiar contraseña
+        </div>
+        <span class="material-symbols-rounded cfg-chevron" id="chevron-password"
+              style="font-size:20px">expand_more</span>
+      </div>
+
+      <div class="cfg-panel" id="panel-password">
+        <div class="flex flex-col gap-4">
+
+          <!-- Contraseña actual -->
+          <div>
+            <label class="cfg-label">
+              <span class="material-symbols-rounded" style="font-size:13px">emergency</span>
+              Contraseña actual
+            </label>
+            <div class="input-icon-wrap" style="position:relative">
+              <span class="material-symbols-rounded icon-left" style="font-size:16px">key</span>
+              <input id="pw-current" type="password"
+                     placeholder="Tu contraseña actual"
+                     class="cfg-input" style="padding-right:40px"/>
+              <button class="toggle-pw" id="btn-pw-current">
+                <span class="material-symbols-rounded" style="font-size:18px">visibility</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Nueva contraseña -->
+          <div>
+            <label class="cfg-label">
+              <span class="material-symbols-rounded" style="font-size:13px">emergency</span>
+              Nueva contraseña
+            </label>
+            <div class="input-icon-wrap" style="position:relative">
+              <span class="material-symbols-rounded icon-left" style="font-size:16px">key</span>
+              <input id="pw-new" type="password"
+                     placeholder="Mínimo 8 caracteres"
+                     class="cfg-input" style="padding-right:40px"/>
+              <button class="toggle-pw" id="btn-pw-new">
+                <span class="material-symbols-rounded" style="font-size:18px">visibility</span>
+              </button>
+            </div>
+            <div class="strength-bar">
+              <div class="strength-fill" id="pw-strength-fill"></div>
+            </div>
+            <p class="text-xs mt-1 font-semibold" id="pw-strength-label" style="min-height:16px"></p>
+          </div>
+
+          <!-- Confirmar contraseña -->
+          <div>
+            <label class="cfg-label">
+              <span class="material-symbols-rounded" style="font-size:13px">emergency</span>
+              Confirmar nueva contraseña
+            </label>
+            <div class="input-icon-wrap" style="position:relative">
+              <span class="material-symbols-rounded icon-left" style="font-size:16px">key</span>
+              <input id="pw-confirm" type="password"
+                     placeholder="Repite la nueva contraseña"
+                     class="cfg-input" style="padding-right:40px"/>
+              <button class="toggle-pw" id="btn-pw-confirm">
+                <span class="material-symbols-rounded" style="font-size:18px">visibility</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="flex gap-3">
+            <button id="btn-pw-cancel" class="btn-secondary" style="flex:1">Cancelar</button>
+            <button id="btn-pw-submit" class="btn-primary" style="flex:1">
+              <span class="material-symbols-rounded" style="font-size:15px;vertical-align:middle">check_circle</span>
+              Guardar
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- Parte 2 — CAMBIAR NOMBRE -->
+    <div class="cfg-section">
+      <div id="header-name" class="cfg-section-header">
+        <div class="cfg-section-title">
+          <div class="cfg-icon">
+            <span class="material-symbols-rounded" style="font-size:18px;color:var(--primary)">heart_smile</span>
+          </div>
+          Cambiar nombre o correo
+        </div>
+        <span class="material-symbols-rounded cfg-chevron" id="chevron-name"
+              style="font-size:20px">expand_more</span>
+      </div>
+
+      <div class="cfg-panel" id="panel-name">
+        <div class="flex flex-col gap-4">
+
+          <div>
+            <label class="cfg-label">
+              <span class="material-symbols-rounded" style="font-size:13px">diversity_4</span>
+              Nombre o Apodo
+            </label>
+            <div class="input-icon-wrap">
+              <span class="material-symbols-rounded icon-left" style="font-size:16px">person</span>
+              <input id="name-input" type="text" placeholder="nombre o apodo que desees" class="cfg-input"/>
+            </div>
+          </div>
+
+          <div>
+            <label class="cfg-label">
+              <span class="material-symbols-rounded" style="font-size:13px">alternate_email</span>
+              Correo electrónico
+            </label>
+            <div class="input-icon-wrap">
+              <span class="material-symbols-rounded icon-left" style="font-size:16px">email</span>
+              <input id="name-email-input" type="email" placeholder="tu correo" class="cfg-input"/>
+            </div>
+          </div>
+
+          <div class="flex gap-3">
+            <button id="btn-name-cancel" class="btn-secondary" style="flex:1">Cancelar</button>
+            <button id="btn-name-submit" class="btn-primary" style="flex:1">
+              <span class="material-symbols-rounded" style="font-size:15px;vertical-align:middle">check_circle</span>
+              Guardar
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- Parte 3 — ELIMINAR CUENTA -->
+    <div class="cfg-section">
+      <div id="header-delete" class="cfg-section-header danger-header">
+        <div class="cfg-section-title danger">
+          <div class="cfg-icon danger">
+            <span class="material-symbols-rounded" style="font-size:18px;color:var(--red)">delete_forever</span>
+          </div>
+          Eliminar cuenta
+        </div>
+        <span class="material-symbols-rounded cfg-chevron" id="chevron-delete"
+              style="font-size:20px;color:var(--red)">expand_more</span>
+      </div>
+
+      <div class="cfg-panel" id="panel-delete">
+        <p class="text-sm mb-4" style="color:var(--muted)">
+          Esta acción es <strong style="color:var(--red)">permanente</strong> e irreversible.
+          Se eliminarán todos tus datos, metas y transacciones.
+        </p>
+
+        <button id="btn-delete-show" class="btn-danger-soft">
+          <span class="material-symbols-rounded" style="font-size:15px;vertical-align:middle">warning</span>
+          Quiero eliminar mi cuenta
+        </button>
+
+        <div class="danger-confirm" id="delete-confirm">
+          <p class="text-sm font-bold mb-1" style="color:var(--red)">¿Seguro que quieres abandonar la madriguera? Si eliminas tu cuenta, perderás el registro de todas tus bellotas guardadas.</p>
+          <p class="text-xs mb-3" style="color:var(--muted)">
+            Escribe <strong>ELIMINAR</strong> para confirmar:
+          </p>
+          <input id="delete-confirm-input" type="text"
+                 placeholder="ELIMINAR"
+                 class="cfg-input danger mb-3"
+                 style="letter-spacing:2px;text-transform:uppercase"/>
+          <div class="flex gap-3">
+            <button id="btn-delete-cancel" class="btn-danger-soft" style="flex:1">Cancelar</button>
+            <button id="btn-delete-confirm" class="btn-danger" style="flex:1">Eliminar cuenta</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- fin cfg-card -->
+</div><!-- fin wrapper -->
+
+<div class="cfg-toast" id="toast"></div>
+
+<script src="/static/js/funcionConf.js"></script>
+</body>
+</html>

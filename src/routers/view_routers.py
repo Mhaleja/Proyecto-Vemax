@@ -1,13 +1,9 @@
-from pathlib import Path
 from fastapi import APIRouter, Request
 from fastapi.templating import Jinja2Templates
 
 router = APIRouter()
 
-SRC_DIR = Path(__file__).resolve().parents[1]
-ROOT_DIR = SRC_DIR.parent
-
-templates = Jinja2Templates(directory=ROOT_DIR / "static" / "templates")
+templates = Jinja2Templates(directory="static/templates")
 
 
 @router.get("/")
@@ -17,14 +13,12 @@ def inicio(request: Request):
         {"request": request}
     )
 
-
 @router.get("/registro")
 def registro(request: Request):
     return templates.TemplateResponse(
         "index.html",
         {"request": request}
     )
-
 
 @router.get("/dashboard")
 def dashboard(request: Request):

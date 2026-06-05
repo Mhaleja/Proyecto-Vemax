@@ -1,0 +1,352 @@
+/* ============================================
+   Configuración — Estilos independientes
+   No depende de ningún otro CSS del proyecto
+   ============================================ */
+
+:root {
+  --primary:       #62afe6;
+  --primary-light: #e8f5fd;
+  --primary-dark:  #3d8fc7;
+  --accent-solid:  #383939;
+  --bg:            #f2f8fd;
+  --card:          #ffffff;
+  --text:          #0d2d45;
+  --muted:         #7a9bb5;
+  --green:         #22C55E;
+  --green-light:   #dcfce7;
+  --red:           #EF4444;
+  --red-light:     #FEE2E2;
+  --border:        #d6eaf8;
+}
+
+html.dark {
+  --primary:       #62afe6;
+  --primary-light: #1a2d3d;
+  --primary-dark:  #89c7f0;
+  --accent-solid:  #2a2b2b;
+  --bg:            #0e1a24;
+  --card:          #162130;
+  --text:          #e8f4fd;
+  --muted:         #5a7f99;
+  --border:        #1e3347;
+  --red-light:     #3d1a1a;
+  --green-light:   #0d2d1a;
+}
+
+* { font-family: 'Sora', sans-serif; box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  transition: background 0.3s, color 0.3s;
+}
+
+/* ── Card ── */
+.cfg-card {
+  background: var(--card);
+  border-radius: 24px;
+  box-shadow: 0 4px 24px rgba(98,175,230,0.10);
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+  from { opacity:0; transform:translateY(16px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+
+/* ── Sección expandible ── */
+.cfg-section {
+  border-bottom: 1.5px solid var(--border);
+  overflow: hidden;
+  transition: background 0.2s;
+}
+.cfg-section:last-child { border-bottom: none; }
+
+.cfg-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 20px;
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.2s;
+  border-radius: 0;
+}
+.cfg-section-header:hover { background: var(--primary-light); }
+
+.cfg-section-header.danger-header:hover { background: var(--red-light); }
+
+.cfg-section-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+}
+.cfg-section-title.danger { color: var(--red); }
+
+.cfg-icon {
+  width: 36px; height: 36px;
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  background: var(--primary-light);
+}
+.cfg-icon.danger { background: var(--red-light); }
+
+/* Chevron animado */
+.cfg-chevron {
+  transition: transform 0.25s ease;
+  color: var(--muted);
+}
+.cfg-chevron.open { transform: rotate(180deg); }
+
+/* Panel interno */
+.cfg-panel {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s cubic-bezier(0.4,0,0.2,1),
+              padding 0.3s ease;
+  padding: 0 20px;
+}
+.cfg-panel.open {
+  max-height: 600px;
+  padding: 4px 20px 20px;
+}
+
+/* ── Avatar ── */
+.avatar-wrap {
+  position: relative;
+  width: 80px; height: 80px;
+  flex-shrink: 0;
+}
+.avatar-img {
+  width: 80px; height: 80px;
+  border-radius: 20px;
+  object-fit: cover;
+  border: 2px solid var(--border);
+  background: var(--primary-light);
+}
+.avatar-badge {
+  position: absolute;
+  bottom: -4px; right: -4px;
+  width: 24px; height: 24px;
+  border-radius: 8px;
+  background: var(--primary);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  border: 2px solid var(--card);
+  transition: opacity 0.2s;
+}
+.avatar-badge:hover { opacity: 0.85; }
+
+/* ── Inputs ── */
+.cfg-input {
+  width: 100%;
+  padding: 11px 14px;
+  border-radius: 12px;
+  border: 1.5px solid var(--border);
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Sora', sans-serif;
+  font-size: 13px;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.cfg-input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(98,175,230,0.15);
+}
+.cfg-input::placeholder { color: var(--muted); }
+.cfg-input.danger:focus {
+  border-color: var(--red);
+  box-shadow: 0 0 0 3px rgba(239,68,68,0.12);
+}
+
+/* ── Input con ícono ── */
+.input-icon-wrap { position: relative; }
+.input-icon-wrap .icon-left {
+  position: absolute; left: 12px; top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: var(--muted);
+}
+.input-icon-wrap .cfg-input { padding-left: 36px; }
+
+/* Toggle contraseña */
+.toggle-pw {
+  position: absolute; right: 12px; top: 50%;
+  transform: translateY(-50%);
+  background: none; border: none;
+  cursor: pointer; color: var(--muted);
+  display: flex; align-items: center;
+  transition: color 0.2s;
+}
+.toggle-pw:hover { color: var(--primary); }
+
+/* ── Indicador de fortaleza ── */
+.strength-bar {
+  height: 4px;
+  border-radius: 99px;
+  background: var(--border);
+  overflow: hidden;
+  margin-top: 6px;
+}
+.strength-fill {
+  height: 100%;
+  border-radius: 99px;
+  transition: width 0.4s ease, background 0.3s;
+  width: 0%;
+}
+
+/* ── Botones ── */
+.btn-primary {
+  background: var(--primary); color: white;
+  border: none; border-radius: 12px;
+  padding: 11px 18px;
+  font-family: 'Sora', sans-serif; font-size: 13px; font-weight: 700;
+  cursor: pointer; transition: opacity 0.2s, transform 0.1s;
+}
+.btn-primary:hover  { opacity: 0.9; }
+.btn-primary:active { transform: scale(0.97); }
+
+.btn-secondary {
+  background: var(--primary-light); color: var(--primary);
+  border: none; border-radius: 12px;
+  padding: 11px 18px;
+  font-family: 'Sora', sans-serif; font-size: 13px; font-weight: 600;
+  cursor: pointer; transition: opacity 0.2s;
+}
+.btn-secondary:hover { opacity: 0.8; }
+
+.btn-danger {
+  background: var(--red); color: white;
+  border: none; border-radius: 12px;
+  padding: 11px 18px;
+  font-family: 'Sora', sans-serif; font-size: 13px; font-weight: 700;
+  cursor: pointer; transition: opacity 0.2s;
+  width: 100%;
+}
+.btn-danger:hover { opacity: 0.88; }
+
+.btn-danger-soft {
+  background: var(--red-light); color: var(--red);
+  border: none; border-radius: 12px;
+  padding: 11px 18px;
+  font-family: 'Sora', sans-serif; font-size: 13px; font-weight: 600;
+  cursor: pointer; transition: opacity 0.2s;
+  width: 100%;
+}
+.btn-danger-soft:hover { opacity: 0.8; }
+
+/* ── Label ── */
+.cfg-label {
+  font-size: 11px; font-weight: 600;
+  color: var(--muted);
+  display: flex; align-items: center; gap: 5px;
+  margin-bottom: 6px;
+}
+
+/* ── Toast ── */
+.cfg-toast {
+  position: fixed; bottom: 24px; right: 24px;
+  background: var(--primary); color: white;
+  padding: 12px 20px; border-radius: 14px;
+  font-size: 13px; font-weight: 600;
+  box-shadow: 0 4px 16px rgba(98,175,230,0.3);
+  opacity: 0; pointer-events: none;
+  transform: translateY(8px);
+  transition: opacity 0.3s, transform 0.3s;
+  z-index: 999;
+}
+.cfg-toast.show { opacity: 1; pointer-events: auto; transform: translateY(0); }
+
+/* ── Confirm danger box ── */
+.danger-confirm {
+  display: none;
+  border-radius: 14px; padding: 16px;
+  border: 1.5px solid var(--red);
+  background: var(--red-light);
+  margin-top: 12px;
+  animation: fadeIn 0.2s ease;
+}
+.danger-confirm.visible { display: block; }
+
+@keyframes fadeIn {
+  from { opacity:0; transform:translateY(4px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar       { width: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 99px; }
+
+/* ── Grilla de avatares predeterminados ── */
+.avatar-presets-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.preset-btn {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 14px;
+  border: 2.5px solid transparent;
+  background: none;
+  cursor: pointer;
+  padding: 0;
+  transition: transform 0.15s, border-color 0.2s;
+  overflow: visible;
+}
+.preset-btn:hover {
+  transform: scale(1.07);
+  border-color: var(--primary);
+}
+.preset-btn.selected {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(98,175,230,0.25);
+}
+
+/* Checkmark que aparece al seleccionar */
+.preset-check {
+  display: none;
+  position: absolute;
+  bottom: -5px; right: -5px;
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  background: var(--primary);
+  color: white;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--card);
+}
+.preset-btn.selected .preset-check {
+  display: flex;
+}
+
+/* Divisor entre presets y subir foto */
+.avatar-divider {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 4px 0 14px;
+}
+.avatar-divider::before,
+.avatar-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+.avatar-divider span {
+  font-size: 11px;
+  color: var(--muted);
+  font-weight: 500;
+  white-space: nowrap;
+}
