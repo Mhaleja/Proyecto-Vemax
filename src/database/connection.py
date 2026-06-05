@@ -4,6 +4,7 @@ from sqlalchemy.orm import sessionmaker
 from src.database.base import Base
 from src.models.user_entity import UserEntity
 from src.models.movement_entity import MovementEntity
+from src.models.saving_goal_entity import SavingGoalEntity
 
 DATABASE_URL = "sqlite:///./vemax.db"
 
