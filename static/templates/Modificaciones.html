@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Modificar Metas</title>
+  <link rel="shortcut icon" href="/static/img/ahorro.png" type="image/x-icon" width="10" height="10">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+  <link rel="stylesheet" href="/static/css/decoracion_modifica.css"/>
+</head>
+<body class="min-h-screen py-10 px-5">
+
+<div class="w-full max-w-4xl mx-auto">
+
+  <!-- ── Topbar ── -->
+  <div class="flex items-center justify-between mb-6">
+    <a id="btn-back" href="/dashboard"
+       class="flex items-center gap-2 text-sm font-semibold transition-all hover:opacity-70"
+       style="color:var(--primary);text-decoration:none">
+      <span class="material-symbols-rounded" style="font-size:20px">arrow_back</span>
+      Volver al dashboard
+    </a>
+    <div class="flex items-center gap-2">
+      <button id="btn-theme-light"
+              class="w-8 h-8 rounded-xl flex items-center justify-center"
+              style="background:var(--primary-light)">
+        <span class="material-symbols-rounded" style="font-size:16px;color:var(--primary)">light_mode</span>
+      </button>
+      <button id="btn-theme-dark"
+              class="w-8 h-8 rounded-xl flex items-center justify-center"
+              style="background:var(--accent-solid)">
+        <span class="material-symbols-rounded" style="font-size:16px;color:white">dark_mode</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ── Card principal ── -->
+  <div class="mm-card p-6">
+
+    <!-- Título -->
+    <div class="flex items-center gap-3 mb-6">
+      <div class="w-10 h-10 rounded-xl flex items-center justify-center"
+           style="background:var(--primary-light)">
+        <span class="material-symbols-rounded" style="font-size:18px;color:var(--primary)">interests</span>
+      </div>
+      <div>
+        <h1 class="text-lg font-bold" style="color:var(--text)">Modificar Metas</h1>
+        <p class="text-sm" style="color:var(--muted)">¡Es hora de juntar tus bellotas!
+           Define tus objetivos financieros y gestiona tus fondos. Crea nuevas metas para el futuro,
+           ajusta tus ahorros actuales o elimina los planes que hayan cambiado.
+           ¡Asegura tu reserva para el invierno!</p>
+      </div>
+    </div>
+
+    <!-- ── Tabs ── -->
+    <div class="flex gap-2 p-1.5 rounded-2xl mb-6" style="background:var(--bg)">
+      <button id="tab-add" class="tab-btn">
+        <span class="material-symbols-rounded" style="font-size:17px">library_add</span>
+        Agregar
+      </button>
+      <button id="tab-delete" class="tab-btn">
+        <span class="material-symbols-rounded" style="font-size:17px">shadow_minus</span>
+        Eliminar
+      </button>
+      <button id="tab-edit" class="tab-btn">
+        <span class="material-symbols-rounded" style="font-size:17px">draw</span>
+        Modificar
+      </button>
+    </div>
+
+    <!-- ════ PANEL 1 — AGREGAR ════ -->
+    <div id="panel-add" class="mm-panel">
+
+      <div class="preview-card mb-5">
+        <div class="flex justify-between items-start mb-3">
+          <div>
+            <p class="text-sm font-bold" id="add-previewName" style="color:var(--text)">Nombre de tu meta</p>
+            <p class="text-xs mt-0.5" id="add-previewCurrent" style="color:var(--muted)">$0 ahorrado</p>
+          </div>
+          <p class="text-sm font-bold" id="add-previewTarget" style="color:var(--primary)">$0</p>
+        </div>
+        <div class="prog-track">
+          <div class="prog-fill" id="add-previewBar" style="width:0%"></div>
+        </div>
+        <p class="text-xs font-bold mt-1.5" id="add-previewPct" style="color:var(--primary)">0%</p>
+      </div>
+
+      <div class="flex flex-col gap-4">
+
+        <div>
+          <label class="mm-label">
+            <span class="material-symbols-rounded" style="font-size:14px">stars_2</span>
+            Nombre de la meta
+          </label>
+          <input id="add-name" type="text" placeholder="Ej: Concierto BTS, Viaje a París..."
+                 class="mm-input"/>
+        </div>
+
+        <div>
+          <label class="mm-label">
+            <span class="material-symbols-rounded" style="font-size:14px">payments</span>
+            Monto objetivo
+          </label>
+          <div class="prefix-wrap">
+            <span class="prefix">$</span>
+            <input id="add-target" type="number" placeholder="500,000" class="mm-input"/>
+          </div>
+        </div>
+
+        <div>
+          <label class="mm-label">
+            <span class="material-symbols-rounded" style="font-size:14px">calendar_month</span>
+            ¿Cuanto tiempo planeas tener esta meta? (opcional)
+          </label>
+          <div class="flex items-center gap-2">
+            <input id="add-start" type="date" class="mm-input"/>
+            <span style="color:var(--muted);flex-shrink:0">—</span>
+            <input id="add-end" type="date" class="mm-input"/>
+          </div>
+        </div>
+
+        <div>
+          <label class="mm-label">
+            <span class="material-symbols-rounded" style="font-size:14px">money_bag</span>
+            ¿Cuánto llevas ahorrado?
+          </label>
+          <div class="flex items-center gap-2">
+            <button id="btn-add-minus" class="btn-round minus">−</button>
+            <div class="prefix-wrap flex-1">
+              <span class="prefix">$</span>
+              <input id="add-current" type="number" placeholder="0"
+                     class="mm-input" style="text-align:center"/>
+            </div>
+            <button id="btn-add-plus" class="btn-round plus">+</button>
+          </div>
+          <p style="font-size:11px;color:var(--muted);margin-top:6px">
+            Los botones suman y restan desde $1,000 en adelante.
+          </p>
+        </div>
+
+        <div class="flex gap-3 mt-2">
+          <a href="../index.html" class="btn-secondary"
+             style="text-decoration:none;text-align:center">Cancelar</a>
+          <button id="btn-add-submit" class="btn-primary">
+            <span class="material-symbols-rounded" style="font-size:16px;vertical-align:middle">add_circle</span>
+            Agregar meta
+          </button>
+        </div>
+
+      </div>
+    </div><!-- fin panel-add -->
+
+    <!-- ════ PANEL 2 — ELIMINAR ════ -->
+    <div id="panel-delete" class="mm-panel">
+
+      <p class="text-sm font-semibold mb-4" style="color:var(--muted)">
+        Selecciona la meta que quieres eliminar:
+      </p>
+
+      <div id="delete-list" class="flex flex-col gap-2 mb-4"></div>
+
+      <div id="delete-confirm-box" class="confirm-box">
+        <div class="flex items-center gap-2 mb-3">
+          <span class="material-symbols-rounded" style="font-size:20px;color:var(--red)">warning</span>
+          <p class="text-sm font-bold" style="color:var(--red)">¿Estás segura?</p>
+        </div>
+        <p class="text-xs mb-4" style="color:var(--muted)">
+          Esta acción no se puede deshacer. La meta sera eliminada permanentemente.
+        </p>
+        <div class="flex gap-3">
+          <button id="btn-delete-cancel" class="btn-danger-soft">Cancelar</button>
+          <button id="btn-delete-confirm" class="btn-danger">
+            <span class="material-symbols-rounded" style="font-size:15px;vertical-align:middle">delete_forever</span>
+            Eliminar
+          </button>
+        </div>
+      </div>
+
+    </div><!-- fin panel-delete -->
+
+    <!-- ════ PANEL 3 — MODIFICAR ════ -->
+    <div id="panel-edit" class="mm-panel">
+
+      <div class="mb-5">
+        <label class="mm-label">
+          <span class="material-symbols-rounded" style="font-size:14px">savings</span>
+          Elige cual meta vas a modificar
+        </label>
+        <select id="edit-select" class="mm-select">
+          <option value=""> Elige una meta </option>
+        </select>
+      </div>
+
+      <div id="edit-form" style="display:none">
+
+        <div class="preview-card mb-5">
+          <div class="flex justify-between items-start mb-3">
+            <div>
+              <p class="text-sm font-bold" id="edit-previewName" style="color:var(--text)">-</p>
+              <p class="text-xs mt-0.5" id="edit-previewCurrent" style="color:var(--muted)">$0 ahorrado</p>
+            </div>
+            <p class="text-sm font-bold" id="edit-previewTarget" style="color:var(--primary)">$0</p>
+          </div>
+          <div class="prog-track">
+            <div class="prog-fill" id="edit-previewBar" style="width:0%"></div>
+          </div>
+          <p class="text-xs font-bold mt-1.5" id="edit-previewPct" style="color:var(--primary)">0%</p>
+        </div>
+
+        <div class="flex flex-col gap-4">
+
+          <div>
+            <label class="mm-label">
+              <span class="material-symbols-rounded" style="font-size:14px">stars_2</span>
+              Nombre
+            </label>
+            <input id="edit-name" type="text" class="mm-input"/>
+          </div>
+
+          <div>
+            <label class="mm-label">
+              <span class="material-symbols-rounded" style="font-size:14px">payments</span>
+              Monto objetivo
+            </label>
+            <div class="prefix-wrap">
+              <span class="prefix">$</span>
+              <input id="edit-target" type="number" class="mm-input"/>
+            </div>
+          </div>
+
+          <div>
+            <label class="mm-label">
+              <span class="material-symbols-rounded" style="font-size:14px">calendar_month</span>
+              Período (opcional)
+            </label>
+            <div class="flex items-center gap-2">
+              <input id="edit-start" type="date" class="mm-input"/>
+              <span style="color:var(--muted);flex-shrink:0">—</span>
+              <input id="edit-end" type="date" class="mm-input"/>
+            </div>
+          </div>
+
+          <div>
+            <label class="mm-label">
+              <span class="material-symbols-rounded" style="font-size:14px">money_bag</span>
+              Monto ahorrado actual
+            </label>
+            <div class="flex items-center gap-2">
+              <button id="btn-edit-minus" class="btn-round minus">−</button>
+              <div class="prefix-wrap flex-1">
+                <span class="prefix">$</span>
+                <input id="edit-current" type="number" class="mm-input"
+                       style="text-align:center"/>
+              </div>
+              <button id="btn-edit-plus" class="btn-round plus">+</button>
+            </div>
+          </div>
+
+          <div class="flex gap-3 mt-2">
+            <button id="btn-edit-cancel" class="btn-secondary">Cancelar</button>
+            <button id="btn-edit-submit" class="btn-primary">
+              <span class="material-symbols-rounded" style="font-size:16px;vertical-align:middle">check_circle</span>
+              Modificar
+            </button>
+          </div>
+
+        </div>
+      </div><!-- fin edit-form -->
+
+    </div><!-- fin panel-edit -->
+
+  </div><!-- fin mm-card -->
+</div><!-- fin wrapper -->
+
+<div class="mm-toast" id="toast"></div>
+
+<script src="/static/js/funciones_modifica.js"></script>
+</body>
+</html>

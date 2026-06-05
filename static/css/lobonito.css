@@ -8,7 +8,7 @@
 
 /* Variables de color */
 :root {
-  --primary:       #62afe6;          /* Celeste principal */
+  --primary:       #4fa3e3;          /* Celeste principal */
   --primary-light: #e8f5fd;          /* Celeste muy suave para fondos y badges */
   --primary-dark:  #3d8fc7;          /* Celeste oscuro para hover */
   --accent:        rgba(56,57,57,0.6);/* Gris oscuro semitransparente */
@@ -24,16 +24,16 @@
  
 /* Modo oscuro */
 html.dark {
-  --primary:       #62afe6;
+  --primary:       #74c7ff;
   --primary-light: #1a2d3d;
   --primary-dark:  #89c7f0;
   --accent:        rgba(56,57,57,0.85);
   --accent-solid:  #2a2b2b;
-  --bg:            #0e1a24;
+  --bg:            #09131d;
   --card:          #162130;
   --text:          #e8f4fd;
-  --muted:         #5a7f99;
-  --border:        #1e3347;
+  --muted:         #9ab6cc;
+  --border:        rgba(152, 188, 220, 0.15);
 }
  
 /*Base*/
@@ -88,15 +88,6 @@ body {
   box-shadow: 0 8px 24px rgba(98, 175, 230, 0.18);
 }
  
-/* Badges */
-.badge-green {
-  background: #DCFCE7;
-  color: #16A34A;
-}
-.badge-red {
-  background: #FEE2E2;
-  color: #DC2626;
-}
  
 /* Progress bar */
 .progress-bar {

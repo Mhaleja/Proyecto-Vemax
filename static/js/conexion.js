@@ -39,6 +39,7 @@ function formatNum(n) {
   return Number(n).toLocaleString('en-US');
 }
 
+
 // ============================================
 // CAPA DE DATOS  —  fetchAPI con fallback
 // ============================================
@@ -165,7 +166,7 @@ async function loadMoneyFlow() {
         {
           label: 'Gastos',
           data: d.expense,
-          backgroundColor: 'rgba(56,57,57,0.5)',  /* gris oscuro semitransparente */
+          backgroundColor: 'rgba(89, 90, 90, 0.5)',  /* gris oscuro semitransparente */
           borderRadius: 6,
           barPercentage: 0.45,
         },
@@ -186,13 +187,15 @@ async function loadMoneyFlow() {
       scales: {
         x: {
           grid: { display: false },
-          ticks: { font: { family: 'Sora', size: 11 }, color: isDark ? '#5a7f99' : '#7a9bb5' },
+          ticks: { font: { family: 'Sora', size: 11 }, color: isDark ? '#9ab6cc' : '#6b87a1' },
         },
         y: {
-          grid: { color: isDark ? '#1e3347' : '#e8f5fd' },
+          grid: {
+            color: isDark ? 'rgba(154,182,204,0.15)' : 'rgba(13,45,69,0.08)'
+          },
           ticks: {
             font: { family: 'Sora', size: 11 },
-            color: isDark ? '#5a7f99' : '#7a9bb5',
+            color: isDark ? '#9ab6cc' : '#6b87a1',
             callback: v => '$' + formatNum(v),
           },
         },
@@ -283,7 +286,7 @@ async function loadTransactions() {
     const icon = CATEGORY_ICONS[t.categoria] || '💸';
 
     return `
-      <tr class="border-t hover:bg-gray-50 transition-colors" style="border-color:var(--border)">
+      <tr class="border-t hover:bg-gray-500 transition-colors" style="border-color:var(--border)">
         <td class="py-3 text-xs" style="color:var(--muted)">${t.fecha}</td>
         <td class="py-3 text-sm font-semibold" style="color:${color}">
           ${sign}$${formatNum(Math.abs(amount))}
@@ -329,6 +332,10 @@ async function loadGoals() {
   `).join('');
 }
 
+function agregarYRedirigir() {
+  window.location.href = '/static/templates/Modificaciones.html';
+}
+
 // ============================================
 // INICIALIZACIÓN
 // ============================================
@@ -356,3 +363,4 @@ document.addEventListener('DOMContentLoaded', () => {
   init();
   setInterval(init, 60_000);
 });
+
